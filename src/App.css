@@ -7,6 +7,49 @@
   pointer-events: none;
 }
 
+.App .master {
+  position: relative;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 5500px;
+}
+
+.App .master li {
+  padding: 5px;
+}
+
+.App .master li.break {
+  flex-basis: 100%;
+  height: 0;
+  padding: 0;
+}
+
+.App .master li.found {
+  background-color: #00ff55;
+}
+
+.App .master li.found2 {
+  background-color: #022d10;
+  color: #fff;
+}
+
+.App .master li.found3 {
+  background-color: #ff0000;
+  color: #fff;
+}
+
+.App .master li[release="9PM"] {
+  border-right: 1px solid #282c34;
+}
+
+.App .tv {
+  overflow: scroll;
+  width: 100%;
+  height: calc(100vh - 153px);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -15,7 +58,6 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
