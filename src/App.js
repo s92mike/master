@@ -4,7 +4,7 @@ import Swertres from './components/Swertres';
 import SearchButton from './components/SearchButton.js';
 
 function App() {
-  const [searchText, setSearchText] = useState('054');
+  const [searchText, setSearchText] = useState('000');
   function searchOnChange(inputText) {
     setSearchText(inputText);
   }

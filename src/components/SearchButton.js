@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function SearchButton(props) {
+    const [digits, setDigits] = useState('');
     function checkDigit (item) {
         const number = item.target.value;
         if (
@@ -11,21 +12,32 @@ export default function SearchButton(props) {
         ) {
             item.preventDefault();
         }
+        setDigits(`${number}${item.key}`);
         if (item.keyCode === 13) {
-            let final = number;
-            if (number.length < 3){
-                final = `0${number}`;
-                if (number.length === 1) {
-                    final = `00${number}`;
-                }
-                if (number.length === 0) {
-                    final = `000`;
-                }
-            }
+            let final = addZero(number);
             props.onChange(final);
         }
     }
-    return(<>
-        <input type="number" min="0" max="999" onKeyDown={checkDigit.bind(this)}/> Input 3 digit number here!
-    </>);
+    const addZero = (number) => {
+        let final = number;
+        if (number.length < 3){
+            final = `0${number}`;
+            if (number.length === 1) {
+                final = `00${number}`;
+            }
+            if (number.length === 0) {
+                final = `000`;
+            }
+        }
+        return final;
+    }
+    const searchDigit = () => {
+        if (digits.length > 0) {
+            let final = addZero(digits);
+            props.onChange(final);
+        }
+    }
+    return(<div className="inputers">
+        <input type="number" min="0" max="999" onKeyDown={checkDigit.bind(this)}/><button type="button" onClick={searchDigit}>Search!!!</button>
+    </div>);
 }

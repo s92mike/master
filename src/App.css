@@ -25,7 +25,7 @@
   height: 0;
   padding: 0;
 }
-
+.App .Group li.found,
 .App .master li.found {
   background-color: #00ff55;
 }
@@ -47,7 +47,31 @@
 .App .tv {
   overflow: scroll;
   width: 100%;
-  height: calc(100vh - 153px);
+  height: calc(100vh - 215px);
+}
+
+.App .tv .guide {
+  float: left;
+  padding: 6px;
+}
+
+.App .display-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.App .Group {
+  list-style: none;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 110px;
+}
+
+.App .Group li {
+  padding: 5px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -64,6 +88,17 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.App-header .inputers {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+}
+
+.App-header .inputers button {
+  cursor: pointer;
 }
 
 .App-link {

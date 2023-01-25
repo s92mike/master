@@ -2,20 +2,18 @@ import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 
 export default function Swertres(props) {
-  const [data,setData]      = useState([]);
-  const [
-    searchData, 
-    setSearchData]          = useState(props.searchText);
-  const [
-    searchPossibilities, 
-    setSearchPossibilities] = useState([]);
+  const [data, setData]                               = useState([]);
+  const [searchPossibilities, setSearchPossibilities] = useState([]);
+  const [searchData, setSearchData]                   = useState(props.searchText);
+
   useEffect(()=>{
-    if (searchData != props.searchText) {
-      console.log(`this is a test`, searchData, props.searchText);
-      // setSearchData(props.searchText);
-      // let possibilities     = getPossibleCombination(searchData);
+    if (searchData !== props.searchText) {
+      setSearchData(props.searchText);
+      setSearchPossibilities([]);
+      setData([]);
     }
-  });
+  }, [props.searchText, searchData]);
+  
   if (data.length <= 0){
     Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vRaT3afh6TliK1NPPeyA2pZUzp-tqVK3rwN-oN6KNLc7Y4udVPGIJ2HMPJ7EdQ-bQX9pe-CM7Etrv0a/pub?output=csv", {
       download: true,
@@ -27,11 +25,19 @@ export default function Swertres(props) {
   }
   // all function with return element
   const Loading         = () => <h2>Loading . . .</h2>;
-  const BreakElement    = () => <li key={Math.random()} className="break">&nbsp;</li>;
+  const BreakElement    = () => <li key={`break-`+Math.random()+Math.random()} className="break">&nbsp;</li>;
   const BlankElement    = () => ('');
   const DemoData        = () => {
-    return searchPossibilities.map((item)=><div key={Math.random()}>{item}</div>)
+    return searchPossibilities.map((item)=><li className="guide" key={`DemoData`+item+Math.random()}>{item}</li>)
   };
+
+  const checkDigit = (pday, cind, resData) => {
+    // return resData[pday][cind];
+    if (resData[pday][cind] !== '000') {
+      return resData[pday][cind];
+    }
+    return checkDigit(pday-1, cind, resData);
+  }
 
   //convert number to Word Months e.g. January, February, ...
   const displayMonth    = (number) => {
@@ -74,22 +80,105 @@ export default function Swertres(props) {
   let DisplayData       = Loading;
   let breakIndicator    = 1;
   let possibilities     = getPossibleCombination(searchData);
-  let result3Der        = getPossibleCombination('173');
-  let result3D1         = getPossibleCombination('303');
-  let result3D2         = getPossibleCombination('092');
-  let result3D3         = getPossibleCombination('023');
-  let result3D4         = getPossibleCombination('400');
-  let result3D5         = getPossibleCombination('664');
-  let result3D6         = getPossibleCombination('601');
-  let result3D7         = getPossibleCombination('433');
-  let result3D8         = getPossibleCombination('441');
+  let result3Der        = getPossibleCombination('');
+  let result3D1         = getPossibleCombination('');
+  let result3D2         = getPossibleCombination('');
+  let result3D3         = getPossibleCombination('');
+  let result3D4         = getPossibleCombination('');
+  let result3D5         = getPossibleCombination('');
+  let result3D6         = getPossibleCombination('');
+  let result3D7         = getPossibleCombination('');
+  let result3D8         = getPossibleCombination('');
 
+  let DisplayGroup = BlankElement;
+  let searchDataGroup = [], searchObj;
 
   if (swertresSearch.length<=0) {
     setSearchPossibilities(possibilities);
   }
   if (swertresData.length > 0 ) {
-    DisplayData       = () => <ul className="master" key={Math.random()}>
+    swertresData.map((data, day) => {
+      let count         = 0;
+      return data.map((item, ind) => {
+        count++;
+        count             = checkCount(count);
+        if (item.trim().length === 0) {
+          item = '000';
+        }
+        const found = swertresSearch.find(el=>item === el);
+        if (found !== undefined) {
+          let colInd1, colInd2, colInd3, indCounter = 0;
+          switch(countType[count]){
+            case '2PM':
+              colInd1 = ind;
+              colInd2 = ind+1;
+              colInd3 = ind+2;
+              indCounter = 3;
+              break;
+            case '5PM':
+              colInd1 = ind-1;
+              colInd2 = ind;
+              colInd3 = ind+1;
+              indCounter = 4;
+              break;
+            case '9PM':
+              colInd1 = ind-2;
+              colInd2 = ind-1;
+              colInd3 = ind;
+              indCounter = 5;
+              break;
+            default:
+              break;
+          }
+          const checkDays       = (day-1) >= 0;
+          const checkColIndex1  = colInd1 >= 0 && colInd1 < data.length;
+          const checkColIndex2  = colInd2 >= 0 && colInd2 < data.length;
+          const checkColIndex3  = colInd3 >= 0 && colInd3 < data.length;
+          let days1             = 'ERR';
+          let days2             = 'ERR';
+          let days3             = 'ERR';
+          let days4             = 'ERR';
+          let days5             = 'ERR';
+          let days6             = 'ERR';
+          let days7             = 'ERR';
+          let days8             = 'ERR';
+          let days9             = 'ERR';
+          if (checkDays) {
+            if (checkColIndex1) days1 = swertresData[day-1][colInd1] ?? 'ERR';
+            if (checkColIndex2) days2 = swertresData[day-1][colInd2] ?? 'ERR';
+            if (checkColIndex3) days3 = swertresData[day-1][colInd3] ?? 'ERR';
+          } else {
+            if (searchData !== '000'){
+              let prevDay = 30;
+              days1 = checkDigit(prevDay, colInd1-indCounter, swertresData);
+              days2 = checkDigit(prevDay, colInd2-indCounter, swertresData);
+              days3 = checkDigit(prevDay, colInd3-indCounter, swertresData);
+            }
+          }
+
+          if (checkColIndex1) {
+            days4 = swertresData[day][colInd1] ?? 'ERR';
+            if ((day+1) < swertresData.length) days7 = swertresData[day+1][colInd1] ?? 'ERR';
+          }
+          if (checkColIndex2) {
+            days5 = swertresData[day][colInd2] ?? 'ERR';
+            if ((day+1) < swertresData.length) days8 = swertresData[day+1][colInd2] ?? 'ERR';
+          }
+          if (checkColIndex3) {
+            days6 = swertresData[day][colInd3] ?? 'ERR';
+            if ((day+1) < swertresData.length) days9 = swertresData[day+1][colInd3] ?? 'ERR';
+          }
+          searchObj = {
+            result: item,
+            group: [days1, days2, days3, days4, days5, days6, days7, days8, days9]
+          };
+          searchDataGroup.push(searchObj);
+        }
+        return item;
+      })
+    });
+
+    DisplayData       = () => <ul className="master" key={`ULMaster`+Math.random()}>
       {swertresData.map((data, day) => {
         let count         = 0;
         let currentYear   = 2019;
@@ -102,6 +191,7 @@ export default function Swertres(props) {
           count++;
           count             = checkCount(count);
           currentYear       = displayYear(index2, currentYear, getMonth, count);
+
           if (breakIndicator !== index1) {
             breakIndicator = index1;
             DisplayBreak   = BreakElement;
@@ -121,7 +211,7 @@ export default function Swertres(props) {
           const found8 = result3D8.find(el=>item===el);
           let foundClassName = '';
           if (found !== undefined) {
-            foundClassName = 'found'
+            foundClassName = 'found';
           }
           if (founder !== undefined) {
             foundClassName += ' found3'
@@ -139,10 +229,11 @@ export default function Swertres(props) {
             foundClassName += ' found2'
           }
           return (<>
-            <DisplayBreak/>
+            <DisplayBreak key={`displaybreak-${Math.random()}`}/>
             <li 
-              key={day + ind}
+              key={day +'-'+ ind +'-'+ Math.random()}
               indexing={(index1) + ", " + (index2)} 
+              indexing2={`${day} - ${ind}`}
               day={(index1)}
               month={getMonth}
               year={currentYear}
@@ -152,16 +243,30 @@ export default function Swertres(props) {
               {item}
             </li>
           </>)
-          // - {getMonth} {(index1)}, {currentYear} - {countType[count]} - [{(index1)}, {index2}] 613 013
         })
       })}
-    </ul>
+    </ul>;
   }
-
-  return (
-    <div className="tv">
-      <DemoData/>
+  if (searchDataGroup.length > 0 && searchData !== '000') {
+    DisplayGroup = ()=>(<>{searchDataGroup.map((result)=>(<ul className="Group" key={`Group`+Math.random()}>
+      {result.group.map((res)=>{
+        let found = '';
+        if (res === result.result) {
+          found = 'found';
+        }
+        return (<li key={`GroupLI`+res+Math.random()} className={found}>{res}</li>)
+      })}
+    </ul>))}</>);
+  } 
+  return (<>
+    <div key="group-123" className="display-group">
+      <ul className="master">
+        <DemoData/>
+      </ul>
+      <DisplayGroup/>
+    </div>
+    <div className="tv" key="tv-123">
       <DisplayData/>
     </div>
-  );
+  </>);
 }
