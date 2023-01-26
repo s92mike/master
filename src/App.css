@@ -13,11 +13,13 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 5500px;
+  width: 6000px;
+  padding: 0;
 }
 
 .App .master li {
   padding: 5px;
+  width: 30px;
 }
 
 .App .master li.break {
@@ -59,6 +61,16 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+}
+
+.App .display-group.result {
+    height: 60px;
+}
+
+.App .display-group .master {
+    width: 100%;
+    justify-content: center;
 }
 
 .App .Group {
@@ -67,7 +79,10 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 110px;
+  width: 160px;
+  padding: 0;
+  justify-content: center;
+  gap: 10px;
 }
 
 .App .Group li {
@@ -112,4 +127,35 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+@media screen and (max-width: 425px) {
+    .App-header {
+        height: 135px;
+    }
+    .App .master {
+        width: 8880px;
+    }
+    .App .master li {
+        width: 50px;
+    }
+    .App .master li.guide {
+        width: 30px;
+    }
+    .App .display-group {
+        overflow: scroll;
+        height: calc( 100vh - 195px);
+    }
+    .App .display-group.result {
+        overflow: hidden;
+        height: 30px;
+    }
+    .App .display-group.result .master {
+        padding: 0;
+        margin: 0;
+    }
+    .App .tv {
+        display: none;
+        height: calc( 46vh );
+    }
 }

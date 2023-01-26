@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function SearchButton(props) {
-    const [digits, setDigits] = useState('');
     function checkDigit (item) {
         const number = item.target.value;
         if (
@@ -12,7 +11,6 @@ export default function SearchButton(props) {
         ) {
             item.preventDefault();
         }
-        setDigits(`${number}${item.key}`);
         if (item.keyCode === 13) {
             let final = addZero(number);
             props.onChange(final);
@@ -31,13 +29,7 @@ export default function SearchButton(props) {
         }
         return final;
     }
-    const searchDigit = () => {
-        if (digits.length > 0) {
-            let final = addZero(digits);
-            props.onChange(final);
-        }
-    }
     return(<div className="inputers">
-        <input type="number" min="0" max="999" onKeyDown={checkDigit.bind(this)}/><button type="button" onClick={searchDigit}>Search!!!</button>
+        <input type="number" min="0" max="999" onKeyDown={checkDigit.bind(this)}/>
     </div>);
 }
