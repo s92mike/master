@@ -30,6 +30,6 @@ export default function SearchButton(props) {
         return final;
     }
     return(<div className="inputers">
-        <input type="number" min="0" max="999" onKeyDown={checkDigit.bind(this)}/>
+        <input type="number" min="1" max="999" onKeyDown={checkDigit.bind(this)}/>
     </div>);
 }
