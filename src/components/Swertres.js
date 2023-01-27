@@ -10,7 +10,6 @@ export default function Swertres(props) {
     if (searchData !== props.searchText) {
       setSearchData(props.searchText);
       setSearchPossibilities([]);
-      setData([]);
     }
   }, [props.searchText, searchData]);
   
@@ -80,6 +79,7 @@ export default function Swertres(props) {
   let DisplayData       = BlankElement;
   let breakIndicator    = 1;
   let possibilities     = getPossibleCombination(searchData);
+  let resultSearch      = getPossibleCombination(props.resultText);
   let result3Der        = getPossibleCombination('');
   let result3D1         = getPossibleCombination('');
   let result3D2         = getPossibleCombination('');
@@ -277,8 +277,13 @@ export default function Swertres(props) {
     DisplayGroup = ()=>(<>{searchDataGroup.map((result)=>(<ul className="Group" key={`Group`+Math.random()}>
       {result.group.map((res)=>{
         let found = '';
+        const foundresult = resultSearch.find(el=>res===el);
         if (res === result.result) {
           found = 'found';
+        }
+        console.log(foundresult, resultSearch, res, `test me`);
+        if (foundresult !== undefined) {
+          found += ' found3'
         }
         return (<li key={`GroupLI`+res+Math.random()} className={found}>{res}</li>)
       })}

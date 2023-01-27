@@ -5,8 +5,12 @@ import SearchButton from './components/SearchButton.js';
 
 function App() {
   const [searchText, setSearchText] = useState('000');
+  const [resultText, setResultText] = useState('000');
   function searchOnChange(inputText) {
     setSearchText(inputText);
+  }
+  function searchResultOnChange(inputText) {
+    setResultText(inputText);
   }
   return (
     <div className="App">
@@ -14,9 +18,10 @@ function App() {
         <h1>Swertresss</h1>
         <SearchButton
           onChange={searchOnChange.bind(this)}
+          onResultChange={searchResultOnChange.bind(this)}
         />
       </header>
-      <Swertres searchText={searchText}/>
+      <Swertres searchText={searchText} resultText={resultText}/>
     </div>
   );
 }
