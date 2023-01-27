@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
+import DisplayTable from "./DisplayTable";
 
 export default function DisplayDigits(props) {
   const [data, setData]                               = useState([]);
@@ -259,7 +260,6 @@ export default function DisplayDigits(props) {
     //   })}
     // </ul>;
   }
-
   if (searchDataGroup.length > 0 && searchData !== '000') {
     DisplayGroup = ()=>(<>{searchDataGroup.map((result)=>(<ul className="Group" key={`Group`+Math.random()}>
       {result.group.map((res)=>{
@@ -275,7 +275,19 @@ export default function DisplayDigits(props) {
         return (<li key={`GroupLI`+res+Math.random()} className={found}>{res}</li>)
       })}
     </ul>))}</>);
-  } 
+  }
+  if (true) {
+    DisplayData = () => (<div className="tv" key="tv-123">
+    <DisplayTable
+      countType={countType}
+      checkCount={checkCount}
+      swertresData={swertresData}
+      BlankElement={BlankElement}
+      swertresSearch={swertresSearch}
+      getPossibleCombination={getPossibleCombination}
+    />
+</div>);
+  }
   return (<>
     <div key="group-123" className="display-group result">
       <ul className="master">
@@ -285,8 +297,6 @@ export default function DisplayDigits(props) {
     <div key="group-124" className="display-group">
       <DisplayGroup/>
     </div>
-    <div className="tv" key="tv-123">
-      <DisplayData/>
-    </div>
+    <DisplayData/>
   </>);
 }
