@@ -72,6 +72,13 @@ export default function Swertres(props) {
     });;
     return [...new Set(possibility)];
   }
+  // check if the number is blank but set if it is part of the latest outcome
+  const latestSection = (threeDigit) => {
+    if (threeDigit.length === 0) {
+      return 'N/A';
+    }
+    return threeDigit;
+  }
   //Initialization of variables
   const swertresData    = Array.from(data);
   const swertresSearch  = Array.from(searchPossibilities);
@@ -191,6 +198,15 @@ export default function Swertres(props) {
           if (checkColIndex3) {
             days6 = swertresData[day][colInd3] ?? 'ERR';
           }
+          days1 = latestSection(days1);
+          days2 = latestSection(days2);
+          days3 = latestSection(days3);
+          days4 = latestSection(days4);
+          days5 = latestSection(days5);
+          days6 = latestSection(days6);
+          days7 = latestSection(days7);
+          days8 = latestSection(days8);
+          days9 = latestSection(days9);
           searchObj = {
             result: item,
             group: [days1, days2, days3, days4, days5, days6, days7, days8, days9]
