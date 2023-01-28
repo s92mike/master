@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export default function SearchButton(props) {
     const [searchText, setSearchText]   = useState('');
-    const [results, setResults]         = useState([]);
+    const [results, setResults]         = useState(['   ','   ','   ','   ','   ','   ']);
 
     function checkDigit (item) {
         const number = item.target.value;
