@@ -53,7 +53,7 @@
 .App .tv {
   overflow: scroll;
   width: 100%;
-  height: calc(100vh - 215px);
+  height: 100vh;
 }
 
 .App .tv .guide {
@@ -171,6 +171,13 @@
     .App-header .inputers label[for="search"] {
       width: 160px;
     }
+    .App-header .inputers button {
+      height: 50px;
+    }
+    .App-header .inputers button.current {
+      background-color: #383b41;
+      color: #fff;
+    }
     .App .master {
         width: 8880px;
     }
@@ -182,7 +189,7 @@
     }
     .App .display-group {
         overflow: scroll;
-        height: calc( 100vh - 195px);
+        height: 100vh;
     }
     .App .display-group.result {
         overflow: hidden;

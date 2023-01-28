@@ -13,7 +13,7 @@ export default function DisplayDigits(props) {
       setSearchData(props.searchText);
       setSearchPossibilities([]);
     }
-  }, [props.searchText, searchData]);
+  }, [props, searchData]);
   
   if (data.length <= 0){
     Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vRaT3afh6TliK1NPPeyA2pZUzp-tqVK3rwN-oN6KNLc7Y4udVPGIJ2HMPJ7EdQ-bQX9pe-CM7Etrv0a/pub?output=csv", {
