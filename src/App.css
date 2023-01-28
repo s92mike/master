@@ -113,6 +113,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding-top: 20px;
   padding-bottom: 20px;
   justify-content: center;
 }
@@ -123,8 +124,16 @@
   padding-bottom: 10px;
 }
 
+.App-header .inputers hr.break {
+  border-bottom: 2px solid #fff;
+  height: 1px;
+  margin-bottom: 10px;
+}
+
 .App-header .inputers label {
   font-size: 14px;
+  padding-bottom: 10px;
+  width: 120px;
 }
 
 .App-header .inputers input {
@@ -154,7 +163,13 @@
 
 @media screen and (max-width: 425px) {
     .App-header {
-        height: 135px;
+      height: auto;
+    }
+    .App-header .inputers {
+      padding: 10px 0;
+    }
+    .App-header .inputers label[for="search"] {
+      width: 160px;
     }
     .App .master {
         width: 8880px;

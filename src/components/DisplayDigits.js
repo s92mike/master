@@ -3,6 +3,7 @@ import Papa from "papaparse";
 import DisplayTable from "./DisplayTable";
 
 export default function DisplayDigits(props) {
+  // const [loading, setLoading]                         = useState(false);
   const [data, setData]                               = useState([]);
   const [searchPossibilities, setSearchPossibilities] = useState([]);
   const [searchData, setSearchData]                   = useState(props.searchText);
@@ -26,7 +27,7 @@ export default function DisplayDigits(props) {
   // all function with return element
   const Loading         = () => <h2>Loading . . .</h2>;
   const BlankElement    = () => ('');
-  const DemoData        = () => {
+  const DemoData        = ({ searchPossibilities }) => {
     return searchPossibilities.map((item)=><li className="guide" key={`DemoData`+item+Math.random()}>{item}</li>)
   };
 
@@ -68,9 +69,12 @@ export default function DisplayDigits(props) {
   const countType       = ['select', '2PM', '5PM', '9PM'];
   let DisplayData       = BlankElement;
   let possibilities     = getPossibleCombination(searchData);
-  let resultSearch      = getPossibleCombination(props.resultText);
+  let resultSearch      = props.resultText.map((propsItem)=>{
+    return getPossibleCombination(propsItem);
+  });
+  getPossibleCombination(props.resultText);
 
-  let DisplayGroup = BlankElement;
+  let DisplayGroup = searchData.length <=0 ? BlankElement : Loading;
   let searchDataGroup = [], searchObj;
 
   if (swertresSearch.length<=0) {
@@ -78,6 +82,7 @@ export default function DisplayDigits(props) {
   }
   if (swertresData.length > 0 ) {
     swertresData.map((data, day) => {
+      DisplayGroup = BlankElement;
       let count         = 0;
       return data.map((item, ind) => {
         count++;
@@ -189,86 +194,15 @@ export default function DisplayDigits(props) {
         return item;
       })
     });
-    if (searchData !== '000') {
-        DisplayGroup = Loading;
-    }
-    //   {swertresData.map((data, day) => {
-    //     let count         = 0;
-    //     let currentYear   = 2019;
-    //     return data.map((item, ind) => {
-    //       let index1        = (day+1);
-    //       let index2        = (ind+1);
-    //       let getMonth      = displayMonth(index2);
-    //       let DisplayBreak  = BlankElement;
-
-    //       count++;
-    //       count             = checkCount(count);
-    //       currentYear       = displayYear(index2, currentYear, getMonth, count);
-
-    //       if (breakIndicator !== index1) {
-    //         breakIndicator = index1;
-    //         DisplayBreak   = BreakElement;
-    //       }
-    //       if (item.trim().length === 0) {
-    //         item = '000';
-    //       }
-    //       const found = swertresSearch.find(el=>item === el);
-    //       const founder = result3Der.find(el=>item===el);
-    //       const found1 = result3D1.find(el=>item===el);
-    //       const found2 = result3D2.find(el=>item===el);
-    //       const found3 = result3D3.find(el=>item===el);
-    //       const found4 = result3D4.find(el=>item===el);
-    //       const found5 = result3D5.find(el=>item===el);
-    //       const found6 = result3D6.find(el=>item===el);
-    //       const found7 = result3D7.find(el=>item===el);
-    //       const found8 = result3D8.find(el=>item===el);
-    //       let foundClassName = '';
-    //       if (found !== undefined) {
-    //         foundClassName = 'found';
-    //       }
-    //       if (founder !== undefined) {
-    //         foundClassName += ' found3'
-    //       }
-    //       if (
-    //         found1 !== undefined ||
-    //         found2 !== undefined ||
-    //         found3 !== undefined ||
-    //         found4 !== undefined ||
-    //         found5 !== undefined ||
-    //         found6 !== undefined ||
-    //         found7 !== undefined ||
-    //         found8 !== undefined
-    //       ) {
-    //         foundClassName += ' found2'
-    //       }
-    //       return (<>
-    //         <DisplayBreak key={`displaybreak-${Math.random()}`}/>
-    //         <li 
-    //           key={day +'-'+ ind +'-'+ Math.random()}
-    //           indexing={(index1) + ", " + (index2)} 
-    //           indexing2={`${day} - ${ind}`}
-    //           day={(index1)}
-    //           month={getMonth}
-    //           year={currentYear}
-    //           release={countType[count]}
-    //           className={foundClassName}
-    //         >
-    //           {item}
-    //         </li>
-    //       </>)
-    //     })
-    //   })}
-    // </ul>;
   }
-  if (searchDataGroup.length > 0 && searchData !== '000') {
+  if (searchDataGroup.length > 0 && searchData !== '000' && searchData !== '   ') {
     DisplayGroup = ()=>(<>{searchDataGroup.map((result)=>(<ul className="Group" key={`Group`+Math.random()}>
       {result.group.map((res)=>{
         let found = '';
-        const foundresult = resultSearch.find(el=>res===el);
+        const foundresult = resultSearch.find(el=>el.includes(res));
         if (res === result.result) {
           found = 'found';
         }
-        console.log(foundresult, resultSearch, res, `test me`);
         if (foundresult !== undefined) {
           found += ' found3'
         }
@@ -276,7 +210,7 @@ export default function DisplayDigits(props) {
       })}
     </ul>))}</>);
   }
-  if (true) {
+  if (false) {
     DisplayData = () => (<div className="tv" key="tv-123">
     <DisplayTable
       countType={countType}
@@ -291,7 +225,7 @@ export default function DisplayDigits(props) {
   return (<>
     <div key="group-123" className="display-group result">
       <ul className="master">
-        <DemoData/>
+        <DemoData searchPossibilities={searchPossibilities}/>
       </ul>
     </div>
     <div key="group-124" className="display-group">
