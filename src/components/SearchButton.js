@@ -87,6 +87,9 @@ export default function SearchButton(props) {
         <label htmlFor="result">
             <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 8)} onKeyDown={checkDigitResult.bind(this)} value={results[8]}/>
         </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 9)} onKeyDown={checkDigitResult.bind(this)} value={results[9]}/>
+        </label>
         <hr className="break"/>
         <button type="button" onClick={submitDigits.bind(this)}>Search!</button>
     </div>);
