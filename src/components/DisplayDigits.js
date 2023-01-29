@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import DisplayTable from "./DisplayTable";
+import { getPossibleCombination } from "../functions/functions";
 
 export default function DisplayDigits(props) {
-  // const [loading, setLoading]                         = useState(false);
   const [data, setData]                               = useState([]);
   const [searchPossibilities, setSearchPossibilities] = useState([]);
   const [searchData, setSearchData]                   = useState(props.searchText);
@@ -13,7 +13,11 @@ export default function DisplayDigits(props) {
       setSearchData(props.searchText);
       setSearchPossibilities([]);
     }
-  }, [props, searchData]);
+    if (data.length > 0 && props.data <= 0) {
+      props.updateData(data);
+    }
+
+  }, [props, searchData, data]);
   
   if (data.length <= 0){
     Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vRaT3afh6TliK1NPPeyA2pZUzp-tqVK3rwN-oN6KNLc7Y4udVPGIJ2HMPJ7EdQ-bQX9pe-CM7Etrv0a/pub?output=csv", {
@@ -40,22 +44,6 @@ export default function DisplayDigits(props) {
   }
   //counter 1 to 3
   const checkCount      = (num) => (num > 3 ? 1 : num); 
-  //get all possible combination
-  const getPossibleCombination = (num) => {
-    const chars         = Array.from(num);
-    const possibility   = [];
-    chars.map((item, iind)=>{
-      const tempItem  = chars.filter((el, i)=> i !== iind);
-      tempItem.map((val, ind)=>{
-        let tempVal = tempItem[ind+1] ?? tempItem[ind-1];
-        let value = `${item}${val}${tempVal}`;
-        possibility.push(value)
-        return val;
-      });
-      return item;
-    });
-    return [...new Set(possibility)];
-  }
   // check if the number is blank but set if it is part of the latest outcome
   const latestSection = (threeDigit) => {
     if (threeDigit.length === 0) {
@@ -74,7 +62,7 @@ export default function DisplayDigits(props) {
   });
   getPossibleCombination(props.resultText);
 
-  let DisplayGroup = searchData.length <=0 ? BlankElement : Loading;
+  let DisplayGroup    = searchData.length <=0 ? BlankElement : Loading;
   let searchDataGroup = [], searchObj;
 
   if (swertresSearch.length<=0) {
@@ -82,8 +70,8 @@ export default function DisplayDigits(props) {
   }
   if (swertresData.length > 0 ) {
     swertresData.map((data, day) => {
-      DisplayGroup = BlankElement;
-      let count         = 0;
+      DisplayGroup  = BlankElement;
+      let count     = 0;
       return data.map((item, ind) => {
         count++;
         count             = checkCount(count);

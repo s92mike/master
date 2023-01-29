@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { checkLengthDigitKeyCode } from "../functions/functions";
 
 export default function SearchButton(props) {
     const [searchText, setSearchText]   = useState(props.searchText);
@@ -6,12 +7,7 @@ export default function SearchButton(props) {
 
     function checkDigit (item) {
         const number = item.target.value;
-        if (
-            number.length+1 > 3 && 
-            ((item.keyCode >= 48 && item.keyCode <= 57) ||
-             (item.keyCode >= 96 && item.keyCode <= 105) ||
-             (item.keyCode === 69))
-        ) {
+        if (checkLengthDigitKeyCode({ l: 3, value: item.target.value, keyCode: item.keyCode })) {
             item.preventDefault();
         }
         if (item.keyCode === 13) {
@@ -22,12 +18,7 @@ export default function SearchButton(props) {
     }
     function checkDigitResult (item) {
         const number = item.target.value;
-        if (
-            number.length+1 > 3 && 
-            ((item.keyCode >= 48 && item.keyCode <= 57) ||
-             (item.keyCode >= 96 && item.keyCode <= 105) ||
-             (item.keyCode === 69))
-        ) {
+        if (checkLengthDigitKeyCode({ l: 3, value: number.target.value, keyCode: number.keyCode })) {
             item.preventDefault();
         }
         if (item.keyCode === 13) {
@@ -52,7 +43,7 @@ export default function SearchButton(props) {
                 final = `00${number}`;
             }
             if (number.length === 0) {
-                final = `000`;
+                final = ``;
             }
         }
         return final;
@@ -86,6 +77,15 @@ export default function SearchButton(props) {
         </label>
         <label htmlFor="result">
             <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 5)} onKeyDown={checkDigitResult.bind(this)} value={results[5]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 6)} onKeyDown={checkDigitResult.bind(this)} value={results[6]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 7)} onKeyDown={checkDigitResult.bind(this)} value={results[7]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 8)} onKeyDown={checkDigitResult.bind(this)} value={results[8]}/>
         </label>
         <hr className="break"/>
         <button type="button" onClick={submitDigits.bind(this)}>Search!</button>
