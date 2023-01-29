@@ -40,7 +40,11 @@ export default function DisplayDigits(props) {
     if (resData[pday][cind] !== '000') {
       return resData[pday][cind];
     }
-    return checkDigit(pday+operation, cind, resData, operation);
+    let currentDay = pday+operation;
+    if (currentDay > 30) {
+      currentDay = 1;
+    }
+    return checkDigit(currentDay, cind, resData, operation);
   }
   //counter 1 to 3
   const checkCount      = (num) => (num > 3 ? 1 : num); 
