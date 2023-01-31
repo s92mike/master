@@ -50,7 +50,7 @@ export default function DisplayDigits(props) {
   const checkCount      = (num) => (num > 3 ? 1 : num); 
   // check if the number is blank but set if it is part of the latest outcome
   const latestSection = (threeDigit) => {
-    if (threeDigit.length === 0) {
+    if (threeDigit === undefined || threeDigit.length === 0) {
       return 'N/A';
     }
     return threeDigit;
@@ -145,9 +145,6 @@ export default function DisplayDigits(props) {
                         colIndCounter1 = colInd1+indCounter;
                         colIndCounter2 = colInd2+indCounter;
                         colIndCounter3 = colInd3+indCounter;
-                        if(colIndCounter1>swertresData.length-1) colIndCounter1-=swertresData.length-1;
-                        if(colIndCounter2>swertresData.length-1) colIndCounter2-=swertresData.length-1;
-                        if(colIndCounter3>swertresData.length-1) colIndCounter3-=swertresData.length-1;
                     }
                     days7 = checkDigit(nextDay, colIndCounter1, swertresData, 1);
                     days8 = checkDigit(nextDay, colIndCounter2, swertresData, 1);
@@ -163,9 +160,6 @@ export default function DisplayDigits(props) {
                 colIndCounter1 = colInd1+indCounter;
                 colIndCounter2 = colInd2+indCounter;
                 colIndCounter3 = colInd3+indCounter;
-                if(colIndCounter1>swertresData.length-1) colIndCounter1-=swertresData.length-1;
-                if(colIndCounter2>swertresData.length-1) colIndCounter2-=swertresData.length-1;
-                if(colIndCounter3>swertresData.length-1) colIndCounter3-=swertresData.length-1;
                 days7 = checkDigit(nextDay, colIndCounter1, swertresData, 1);
                 days8 = checkDigit(nextDay, colIndCounter2, swertresData, 1);
                 days9 = checkDigit(nextDay, colIndCounter3, swertresData, 1);
