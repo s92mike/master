@@ -145,6 +145,9 @@ export default function DisplayDigits(props) {
                         colIndCounter1 = colInd1+indCounter;
                         colIndCounter2 = colInd2+indCounter;
                         colIndCounter3 = colInd3+indCounter;
+                        if(colIndCounter1>swertresData.length-1) colIndCounter1-=swertresData.length-1;
+                        if(colIndCounter2>swertresData.length-1) colIndCounter2-=swertresData.length-1;
+                        if(colIndCounter3>swertresData.length-1) colIndCounter3-=swertresData.length-1;
                     }
                     days7 = checkDigit(nextDay, colIndCounter1, swertresData, 1);
                     days8 = checkDigit(nextDay, colIndCounter2, swertresData, 1);
@@ -154,9 +157,18 @@ export default function DisplayDigits(props) {
           } else  {
             if (searchData !== '000') {
                 let nextDay = 0;
-                days7 = checkDigit(nextDay, colInd1+indCounter, swertresData, 1);
-                days8 = checkDigit(nextDay, colInd2+indCounter, swertresData, 1);
-                days9 = checkDigit(nextDay, colInd3+indCounter, swertresData, 1);
+                let colIndCounter1  = colInd1;
+                let colIndCounter2  = colInd2;
+                let colIndCounter3  = colInd3;
+                colIndCounter1 = colInd1+indCounter;
+                colIndCounter2 = colInd2+indCounter;
+                colIndCounter3 = colInd3+indCounter;
+                if(colIndCounter1>swertresData.length-1) colIndCounter1-=swertresData.length-1;
+                if(colIndCounter2>swertresData.length-1) colIndCounter2-=swertresData.length-1;
+                if(colIndCounter3>swertresData.length-1) colIndCounter3-=swertresData.length-1;
+                days7 = checkDigit(nextDay, colIndCounter1, swertresData, 1);
+                days8 = checkDigit(nextDay, colIndCounter2, swertresData, 1);
+                days9 = checkDigit(nextDay, colIndCounter3, swertresData, 1);
             }
           }
           if (checkColIndex1) {
