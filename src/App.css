@@ -104,10 +104,7 @@
 .App .days,
 .App .days li {
   width: 100px;
-}
-
-.App .days li {
-  height: 50px;
+  display: block;
 }
 
 @media (prefers-reduced-motion: no-preference) {

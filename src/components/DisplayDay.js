@@ -31,9 +31,9 @@ export default function DisplayDay({ day, data }) {
         let result  = { next, current, prev };
         if (currentDay >= 0) {
             result = {
-                next: checkDay(currentDay+2),
-                current: checkDay(currentDay+1),
-                prev: checkDay(currentDay)
+                next: checkDay(currentDay+1)+1,
+                current: checkDay(currentDay)+1,
+                prev: checkDay(currentDay-1)+1
             }
         }
         return result;
@@ -53,7 +53,7 @@ export default function DisplayDay({ day, data }) {
                 if (tempDayData !== undefined && tempDayData.length > 0){
                     tempDayData.map((num)=>{
                         const possibilities = getPossibleCombination(num);
-                        let count           = 0;
+                        let count           = 1;
                         searchDayData.map((num2) => {
                             const checkPossibilities = possibilities.find(el=>el===num2)
                             if (checkPossibilities !== undefined) {
@@ -61,7 +61,7 @@ export default function DisplayDay({ day, data }) {
                             }
                             return num2;
                         });
-                        if (num !== `000`){
+                        if (num !== `000` && num !== ``){
                             found.push({ count, value: num });
                         }
                         return num;
