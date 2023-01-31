@@ -3,6 +3,7 @@ import { checkLengthDigitKeyCode } from "../functions/functions";
 
 export default function SearchByDayButton(props) {
   const [day, setDay] = useState(props.day);
+  const [search, setSearch] = useState(props.daySearch);
 
   function checkDigit(e) {
     const { target: { value }, keyCode } = e;
@@ -10,7 +11,17 @@ export default function SearchByDayButton(props) {
       e.preventDefault();
     }
     if (keyCode === 13) {
-        props.dayOnChange(value);
+        props.dayOnChange(value, search);
+    }
+  };
+
+  function checkDigitResult(e) {
+    const { target: { value }, keyCode } = e;
+    if (checkLengthDigitKeyCode({ l: 3, value, keyCode })) {
+      e.preventDefault();
+    }
+    if (keyCode === 13) {
+      props.dayOnChange(day, value);
     }
   };
 
@@ -20,6 +31,17 @@ export default function SearchByDayButton(props) {
     }
     setDay(value);
   };
+
+  function checkDayChangeResult({ target: { value } }) {
+    if (value > 999) {
+        value = 999;
+    }
+    setSearch(value);
+  };
+
+  function submitDigits () {
+    props.dayOnChange(day, search);
+  }
   return (
     <div className="inputers">
       <label htmlFor="search">
@@ -32,6 +54,19 @@ export default function SearchByDayButton(props) {
           value={day}
         />
       </label>
+      <hr className="break"/>
+      <label htmlFor="result">
+        <input
+          type="number"
+          min="0"
+          max="999"
+          onChange={checkDayChangeResult.bind(this)}
+          onKeyDown={checkDigitResult.bind(this)}
+          value={search}
+        />
+      </label>
+      <hr className="break"/>
+      <button type="button" onClick={submitDigits.bind(this)}>Search!</button>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { getPossibleCombination } from "../functions/functions";
 
-export default function DisplayDay({ day, data }) {
+export default function DisplayDay({ day, data, daySearch }) {
     const recurringData         = ({ dataArray = [], dAIndex = 0 }) => {
         const tempArray = [...dataArray];
         if (dataArray[dAIndex] === undefined) {
@@ -46,8 +46,14 @@ export default function DisplayDay({ day, data }) {
     let foundNext           = [];
     let foundPrev           = [];
     if (day.length > 0 && currentDay >= 0 ){
-        const searchDayData = data[currentDay] ?? [];
+        const searchDayData     = data[currentDay] ?? [];
+        const searchDayDataNext = data[nextDay] ?? [];
+        const searchDayDataPrev = data[prevDay] ?? [];
+        let searchPossibilities = [];
         if (searchDayData.length > 0) {
+            if (daySearch.length > 0) {
+                searchPossibilities = getPossibleCombination(daySearch);
+            }
             const processData           = (tempDayData) => {
                 const found     = [];
                 if (tempDayData !== undefined && tempDayData.length > 0){
@@ -62,7 +68,9 @@ export default function DisplayDay({ day, data }) {
                             return num2;
                         });
                         if (num !== `000` && num !== ``){
-                            found.push({ count, value: num });
+                            const checkSearchPoss   = searchPossibilities.find(el=>el===num);
+                            let className           = checkSearchPoss !== undefined ? `found` : ``;
+                            found.push({ count, value: num, className });
                         }
                         return num;
                     });
@@ -73,24 +81,24 @@ export default function DisplayDay({ day, data }) {
             let tempDayData             = [];
             let tempDayNext             = [];
             let tempDayPrev             = [];
-            const searchDayDataNext     = data[nextDay] ?? [];
-            const searchDayDataPrev     = data[prevDay] ?? [];
-            const tempDayData2          = Array.from([...new Set(searchDayData)]);
-            const tempDayData2Next      = Array.from([...new Set(searchDayDataNext)]);
-            const tempDayData2Prev      = Array.from([...new Set(searchDayDataPrev)]);
+
+            const tempDayData2      = Array.from([...new Set(searchDayData)]);
+            const tempDayData2Next  = Array.from([...new Set(searchDayDataNext)]);
+            const tempDayData2Prev  = Array.from([...new Set(searchDayDataPrev)]);
 
             tempDayData2.sort((a,b)=>(a < b ? 1 : -1));
             tempDayData2Next.sort((a,b)=>(a < b ? 1 : -1));
             tempDayData2Prev.sort((a,b)=>(a < b ? 1 : -1));
 
-            tempDayData                 = recurringData({ dataArray: tempDayData2 });
-            tempDayNext                 = recurringData({ dataArray: tempDayData2Next });
-            tempDayPrev                 = recurringData({ dataArray: tempDayData2Prev });
+            tempDayData             = recurringData({ dataArray: tempDayData2 });
+            tempDayNext             = recurringData({ dataArray: tempDayData2Next });
+            tempDayPrev             = recurringData({ dataArray: tempDayData2Prev });
 
-            found = processData(tempDayData);
-            foundNext = processData(tempDayNext);
-            foundPrev = processData(tempDayPrev);
+            found                   = processData(tempDayData);
+            foundNext               = processData(tempDayNext);
+            foundPrev               = processData(tempDayPrev);
         }
+
         found.sort((a,b)=>(a.value < b.value ? 1 : -1));
         foundNext.sort((a,b)=>(a.value < b.value ? 1 : -1));
         foundPrev.sort((a,b)=>(a.value < b.value ? 1 : -1));
@@ -98,15 +106,15 @@ export default function DisplayDay({ day, data }) {
     return (<div className='container-days'>
         <ul className='days'>
             <li key="day-prev-list">{displayDay.prev}</li>
-            {foundPrev.map((item)=>(<li key={item.value+'-'+Math.random}>{item.value}-{item.count}</li>))}
+            {foundPrev.map((item)=>(<li className={item.className} key={item.value+'-'+Math.random}>{item.value}-{item.count}</li>))}
         </ul>
         <ul className='days'>
             <li key="day-curr-list">{displayDay.current}</li>
-            {found.map((item)=>(<li key={item.value+'-'+Math.random}>{item.value}-{item.count}</li>))}
+            {found.map((item)=>(<li className={item.className} key={item.value+'-'+Math.random}>{item.value}-{item.count}</li>))}
         </ul>
         <ul className='days'>
             <li key="day-next-list">{displayDay.next}</li>
-            {foundNext.map((item)=>(<li key={item.value+'-'+Math.random}>{item.value}-{item.count}</li>))}
+            {foundNext.map((item)=>(<li className={item.className} key={item.value+'-'+Math.random}>{item.value}-{item.count}</li>))}
         </ul>
     </div>);
 }

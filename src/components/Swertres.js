@@ -1,24 +1,38 @@
 import React, { useState } from "react";
-import SearchButton from "./SearchButton";
-import DisplayDigits from "./DisplayDigits";
-import TabSelector from "./TabSelector";
-import SearchByDayButton from "./SearchByDayButton";
-import DisplayDay from "./DisplayDay";
 
-export default function Swertres(props) {
-  const [day, setDay] = useState("");
-  const [data, setData] = useState([]);
-  const [searchText, setSearchText] = useState("   ");
-  const [resultText, setResultText] = useState(["", "", "", "", "", "", "", "", ""]);
-  const [options, setOptions] = useState("sidebyside"); // sidebyside and by day
+import DisplayDay from "./DisplayDay";
+import SearchButton from "./SearchButton";
+import TabSelector from "./TabSelector";
+import DisplayDigits from "./DisplayDigits";
+import SearchByDayButton from "./SearchByDayButton";
+
+export default function Swertres() {
+  const [day, setDay] = useState(""); // used by day SearchButton and DisplayDay, function SearchByDayButton
+  const [daySearch, setDaySearch] = useState(""); // used by Search Day Search number
+  const [data, setData] = useState([]); // used by DisplayDigit, DisplayDay
+  const [options, setOptions] = useState("sidebyside"); // used by TabSelector
+  const [searchText, setSearchText] = useState("   "); // used by SearchButton, DisplayDigit
+  const [resultText, setResultText] = useState([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]); // used by SearchButton, DisplayDigit
+
   function searchOnChange(inputText) {
     setSearchText(inputText);
   }
   function searchResultOnChange(inputText) {
     setResultText(inputText);
   }
-  function dayOnChange(inputText) {
+  function dayOnChange(inputText, searchText) {
     setDay(inputText);
+    setDaySearch(searchText);
   }
   function updateData(inputData) {
     setData(inputData);
@@ -39,16 +53,34 @@ export default function Swertres(props) {
       resultText={resultText}
     />
   );
-  if (`sidebyside` !== options) {
-    ButtonSelected = () => (
-      <SearchByDayButton day={day} dayOnChange={dayOnChange.bind(this)} />
+  switch (options) {
+    case `byday`:
+      ButtonSelected = () => (
+        <SearchByDayButton
+          day={day}
+          daySearch={daySearch}
+          dayOnChange={dayOnChange.bind(this)}
+        />
+      );
+      ResultSection = () => <DisplayDay day={day} daySearch={daySearch} data={data} />;
+      break;
+    case `sidebysidev1`:
+      ButtonSelected = () => "";
+      ResultSection = () => <div>Coming soon</div>;
+      break;
+    default:
+      break;
+  }
+  let DisplayTab = () => "";
+  if (data.length > 0) {
+    DisplayTab = () => (
+      <TabSelector options={options} setOptions={setOptions} />
     );
-    ResultSection = () => <DisplayDay day={day} data={data} />;
   }
   return (
     <div className="App">
       <header className="App-header">
-        <TabSelector options={options} setOptions={setOptions} />
+        <DisplayTab />
         <ButtonSelected />
       </header>
       <ResultSection />

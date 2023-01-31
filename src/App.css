@@ -30,6 +30,8 @@
   margin: 0;
   border: 0;
 }
+
+.App .days li.found,
 .App .Group li.found,
 .App .master li.found {
   background-color: #00ff55;
