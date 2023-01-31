@@ -94,9 +94,20 @@
   padding: 5px;
 }
 
+.App .container-days {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .App .days,
 .App .days li {
-  width: 100%;
+  width: 100px;
+}
+
+.App .days li {
+  height: 50px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
