@@ -4,7 +4,6 @@ import { getPossibleCombination } from "../functions/functions";
 export default function DisplayDay({ day, data }) {
     const currentDay= parseInt(day) - 1;
     const found     = [];
-    let countTemp   = 0;
     if (day.length > 0 && currentDay >= 0 ){
         const searchDayData = data[currentDay] ?? [];
         if (searchDayData.length > 0) {
@@ -43,15 +42,13 @@ export default function DisplayDay({ day, data }) {
                         }
                         return num2;
                     });
-                    countTemp+=count;
                     found.push({ count, value: num });
                     return num;
                 });
             }
         }
-        found.sort((a,b)=>(a.count < b.count ? 1 : -1));
+        found.sort((a,b)=>(a.value < b.value ? 1 : -1));
     }
-    console.log(countTemp);
     return (<ul className='days'>
         {found.map((item)=>(<li key={item.value+'-'+Math.random}>{item.value}-{item.count}</li>))}
     </ul>);
