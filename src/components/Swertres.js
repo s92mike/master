@@ -5,6 +5,7 @@ import SearchButton from "./SearchButton";
 import TabSelector from "./TabSelector";
 import DisplayDigits from "./DisplayDigits";
 import SearchByDayButton from "./SearchByDayButton";
+import DisplayDigitsAuto from "./DisplayDigitsAuto";
 
 export default function Swertres() {
   const [day, setDay] = useState(""); // used by day SearchButton and DisplayDay, function SearchByDayButton
@@ -66,7 +67,7 @@ export default function Swertres() {
       break;
     case `sidebysidev1`:
       ButtonSelected = () => "";
-      ResultSection = () => <div>Coming soon</div>;
+      ResultSection = () => <DisplayDigitsAuto data={data}/>;
       break;
     default:
       break;
