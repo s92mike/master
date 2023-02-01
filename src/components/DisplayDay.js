@@ -59,7 +59,7 @@ export default function DisplayDay({ day, data, daySearch }) {
                 if (tempDayData !== undefined && tempDayData.length > 0){
                     tempDayData.map((num)=>{
                         const possibilities = getPossibleCombination(num);
-                        let count           = 1;
+                        let count           = 0;
                         searchDayData.map((num2) => {
                             const checkPossibilities = possibilities.find(el=>el===num2)
                             if (checkPossibilities !== undefined) {
@@ -70,6 +70,7 @@ export default function DisplayDay({ day, data, daySearch }) {
                         if (num !== `000` && num !== ``){
                             const checkSearchPoss   = searchPossibilities.find(el=>el===num);
                             let className           = checkSearchPoss !== undefined ? `found` : ``;
+                            if (count === 0) { count = 1; }
                             found.push({ count, value: num, className });
                         }
                         return num;
