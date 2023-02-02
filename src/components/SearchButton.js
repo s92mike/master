@@ -18,7 +18,7 @@ export default function SearchButton(props) {
     }
     function checkDigitResult (item) {
         const number = item.target.value;
-        if (checkLengthDigitKeyCode({ l: 3, value: number.target.value, keyCode: number.keyCode })) {
+        if (checkLengthDigitKeyCode({ l: 3, value: number, keyCode: number.keyCode })) {
             item.preventDefault();
         }
         if (item.keyCode === 13) {
