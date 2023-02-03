@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import DisplayTable from "./DisplayTable";
-import { getPossibleCombination } from "../functions/functions";
+import { getPossibleCombination, checkDouble } from "../functions/functions";
 
 export default function DisplayDigits(props) {
   const [data, setData]                               = useState([]);
@@ -196,7 +196,8 @@ export default function DisplayDigits(props) {
   if (searchDataGroup.length > 0 && searchData !== '000' && searchData !== '   ') {
     DisplayGroup = ()=>(<>{searchDataGroup.map((result)=>(<ul className="Group" key={`Group`+Math.random()}>
       {result.group.map((res)=>{
-        let found = '';
+        let found       = '';
+        let doubleFound = checkDouble(res) ? ` double` : ``;
         const foundresult = resultSearch.find(el=>el.includes(res));
         if (res === result.result) {
           found = 'found';
@@ -204,6 +205,7 @@ export default function DisplayDigits(props) {
         if (foundresult !== undefined) {
           found += ' found3'
         }
+        found += doubleFound;
         return (<li key={`GroupLI`+res+Math.random()} className={found}>{res}</li>)
       })}
     </ul>))}</>);

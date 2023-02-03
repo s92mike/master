@@ -33,3 +33,4 @@ export const checkIndexArray = ({ num, length }) => {
   return num;
 };
 
+export const checkDouble = (num) => Array.from(num).some((item, index) => num.indexOf(item) !== index);

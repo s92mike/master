@@ -1,5 +1,5 @@
 import React from 'react';
-import { getPossibleCombination } from "../functions/functions";
+import { getPossibleCombination, checkDouble } from "../functions/functions";
 
 export default function DisplayDay({ day, data, daySearch }) {
     const recurringData         = ({ dataArray = [], dAIndex = 0 }) => {
@@ -71,6 +71,8 @@ export default function DisplayDay({ day, data, daySearch }) {
                             const checkSearchPoss   = searchPossibilities.find(el=>el===num);
                             let className           = checkSearchPoss !== undefined ? `found` : ``;
                             if (count === 0) { count = 1; }
+                            const foundDouble = checkDouble(num) ? ` double` : ``;
+                            className += foundDouble;
                             found.push({ count, value: num, className });
                         }
                         return num;

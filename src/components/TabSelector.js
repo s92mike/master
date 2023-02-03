@@ -59,16 +59,16 @@ export default function TabSelector({ setOptions, options }) {
         Inadlawan
       </button>
       <button
-        className={sidebysidev1ClassName}
-        onClick={toggleCurrent.bind(this, `sidebysidev1`)}
-      >
-        Theory One
-      </button>
-      <button
         className={imageSurigaoClassName}
         onClick={toggleCurrent.bind(this, `image-surigao`)}
       >
         Image
+      </button>
+      <button
+        className={sidebysidev1ClassName}
+        onClick={toggleCurrent.bind(this, `sidebysidev1`)}
+      >
+        Theory One
       </button>
     </div>
   );

@@ -48,6 +48,11 @@
   color: #fff;
 }
 
+.App .days li.double,
+.App .Group li.double {
+  background-color: #fff700;
+}
+
 .App .master li[release="9PM"] {
   border-right: 1px solid #282c34;
 }
