@@ -65,11 +65,12 @@ export default function DisplayDigitAuto({ data }) {
         // check if 30 and 29 for `000` or empty
     }
 
+    let currentIndex    = dataIndex;
+    let listLength      = dTLength;
     if ( dataToday[dTLength].length === 0 ) {
         //first number not yet inputed
-        let currentIndex    = dataIndex;
         let getNum          = checkNum(dataToday[dTLength], dataToday, dTLength);
-        let listLength      = getNum.length;
+        listLength          = getNum.length;
         firstNum            = getNum.num;
 
         if (firstNum.length === 0) {
@@ -78,25 +79,15 @@ export default function DisplayDigitAuto({ data }) {
             count           = 1;
         }
 
-        listNum = getListNum(data, { currentIndex, listLength }, 1, count);
     }
-
-    /**
-     * number will inter three times a day
-     * current day check if first, 2nd, and third
-     * 
-     * if first time get yesterday nine numbers
-     * if second get yesterday nine numbers plus first
-     * if third get nine number plus first and second
-     * 
-     */
-
-    console.log(dataIndex, listNum, data, `today`);
+    
+    listNum = getListNum(data, { currentIndex, listLength }, 1, count);
+    
     return (<>
-        <h2>Latest Result from Right to Left</h2>
+        <h2>Theory One Coming Soon!!!</h2>
+        <p><b>Latest Result from Right to Left</b></p>
         <ul className="master theory-1">
             {listNum.map((item,ind)=>(<li className='guide' key={`theory-`+ind}>{item}</li>))}
         </ul>
-        <div>Theory One Coming Soon!!!</div>
     </>);
 }
