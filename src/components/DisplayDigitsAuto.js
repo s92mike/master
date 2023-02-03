@@ -93,8 +93,10 @@ export default function DisplayDigitAuto({ data }) {
 
     console.log(dataIndex, listNum, data, `today`);
     return (<>
+        <h2>Latest Result from Right to Left</h2>
         <ul className="master theory-1">
             {listNum.map((item,ind)=>(<li className='guide' key={`theory-`+ind}>{item}</li>))}
         </ul>
+        <div>Theory One Coming Soon!!!</div>
     </>);
 }
