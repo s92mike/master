@@ -1,5 +1,5 @@
 //get all possible combination
-const getPossibleCombination = (num) => {
+export const getPossibleCombination = (num) => {
   const chars = Array.from(num);
   const possibility = [];
   chars.map((item, iind) => {
@@ -15,7 +15,7 @@ const getPossibleCombination = (num) => {
   return [...new Set(possibility)];
 };
 
-const checkLengthDigitKeyCode = ({ l, value, keyCode }) => {
+export const checkLengthDigitKeyCode = ({ l, value, keyCode }) => {
   return (
     value.length + 1 > l &&
     ((keyCode >= 48 && keyCode <= 57) ||
@@ -24,11 +24,12 @@ const checkLengthDigitKeyCode = ({ l, value, keyCode }) => {
   );
 };
 
-const checkIndexArray = ({ num, length }) => {
+export const checkIndexArray = ({ num, length }) => {
   if (num < 0) {
     num = length;
+  } else if (num > length) {
+    num = 0;
   }
   return num;
 };
 
-export { getPossibleCombination, checkLengthDigitKeyCode, checkIndexArray };

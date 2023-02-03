@@ -197,6 +197,10 @@
     .App .master {
         width: 8880px;
     }
+    .App .master.theory-1 {
+      width: 200px;
+      margin: 0 auto;
+    }
     .App .master li {
         width: 50px;
     }
