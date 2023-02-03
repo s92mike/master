@@ -6,6 +6,7 @@ import TabSelector from "./TabSelector";
 import DisplayDigits from "./DisplayDigits";
 import SearchByDayButton from "./SearchByDayButton";
 import DisplayDigitsAuto from "./DisplayDigitsAuto";
+import surigaoImage from "../surigao.jpg";
 
 export default function Swertres() {
   const [day, setDay] = useState(""); // used by day SearchButton and DisplayDay, function SearchByDayButton
@@ -68,6 +69,10 @@ export default function Swertres() {
     case `sidebysidev1`:
       ButtonSelected = () => "";
       ResultSection = () => <DisplayDigitsAuto data={data}/>;
+      break;
+    case `image-surigao`:
+      ButtonSelected = () => "";
+      ResultSection = () => <img className="custom-img" src={surigaoImage} alt=""/>;
       break;
     default:
       break;

@@ -4,15 +4,24 @@ export default function TabSelector({ setOptions, options }) {
   let sidebysideClassName = `current`;
   let bydayClassName = ``;
   let sidebysidev1ClassName = ``;
+  let imageSurigaoClassName = ``;
   if (`byday` === options) {
     bydayClassName = `current`;
     sidebysideClassName = ``;
     sidebysidev1ClassName = ``;
+    imageSurigaoClassName = ``;
   }
   if (`sidebysidev1` === options) {
     bydayClassName = ``;
     sidebysideClassName = ``;
     sidebysidev1ClassName = `current`;
+    imageSurigaoClassName = ``;
+  }
+  if (`image-surigao` === options) {
+    bydayClassName = ``;
+    sidebysideClassName = ``;
+    sidebysidev1ClassName = ``;
+    imageSurigaoClassName = `current`;
   }
   const toggleCurrent = (currentOptions) => {
     let changeOption = ``;
@@ -25,6 +34,9 @@ export default function TabSelector({ setOptions, options }) {
         break;
       case `sidebysidev1`:
         changeOption = `sidebysidev1`;
+        break;
+      case `image-surigao`:
+        changeOption = `image-surigao`;
         break;
       default:
         changeOption = `sidebyside`;
@@ -51,6 +63,12 @@ export default function TabSelector({ setOptions, options }) {
         onClick={toggleCurrent.bind(this, `sidebysidev1`)}
       >
         Theory One
+      </button>
+      <button
+        className={imageSurigaoClassName}
+        onClick={toggleCurrent.bind(this, `image-surigao`)}
+      >
+        Image
       </button>
     </div>
   );

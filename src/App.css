@@ -52,6 +52,12 @@
   border-right: 1px solid #282c34;
 }
 
+.App .custom-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .App .tv {
   overflow: scroll;
   width: 100%;
