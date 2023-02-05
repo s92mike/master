@@ -31,6 +31,11 @@
   border: 0;
 }
 
+.App .days li.double,
+.App .Group li.double {
+  background-color: #fff700;
+}
+
 .App .days li.found,
 .App .Group li.found,
 .App .master li.found {
@@ -46,11 +51,6 @@
 .App .master li.found3 {
   background-color: #ff0000;
   color: #fff;
-}
-
-.App .days li.double,
-.App .Group li.double {
-  background-color: #fff700;
 }
 
 .App .master li[release="9PM"] {
