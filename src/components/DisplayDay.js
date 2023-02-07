@@ -8,18 +8,12 @@ export default function DisplayDay({ day, data, daySearch }) {
             return dataArray;
         }
         let poss = getPossibleCombination(dataArray[dAIndex]);
-        let searchCount = 0;
-        dataArray.forEach((item, ind)=>{
-            let searchPoss = poss.find(el=>el===item);
-            if(ind !== dAIndex) {
-                if (searchPoss !== undefined){
-                    tempArray.splice(ind+searchCount, 1);
-                    searchCount++;
-                }
-            }
-        });
+        let result = tempArray.filter(item => poss.includes(item)).filter(item=>item!==dataArray[dAIndex]);
+        if (result.length > 0) {
+            dataArray.filter(item=>!result.includes(item));
+        }
         dAIndex++;
-        return recurringData({ dataArray: tempArray, dAIndex });
+        return recurringData({ dataArray, dAIndex });
     };
     const checkDay          = (currentDay) => {
         return currentDay > 30 ? 0 : currentDay < 0 ? 30 : currentDay;
@@ -54,18 +48,17 @@ export default function DisplayDay({ day, data, daySearch }) {
             if (daySearch.length > 0) {
                 searchPossibilities = getPossibleCombination(daySearch);
             }
-            const processData           = (tempDayData) => {
-                const found     = [];
+            const processData = (tempDayData) => {
+                const found = [];
                 if (tempDayData !== undefined && tempDayData.length > 0){
-                    tempDayData.map((num)=>{
+                    tempDayData.forEach((num)=>{
                         const possibilities = getPossibleCombination(num);
                         let count           = 0;
-                        searchDayData.map((num2) => {
+                        searchDayData.forEach((num2) => {
                             const checkPossibilities = possibilities.find(el=>el===num2)
                             if (checkPossibilities !== undefined) {
                                 count++;
                             }
-                            return num2;
                         });
                         if (num !== `000` && num !== ``){
                             const checkSearchPoss   = searchPossibilities.find(el=>el===num);
@@ -75,7 +68,6 @@ export default function DisplayDay({ day, data, daySearch }) {
                             className += foundDouble;
                             found.push({ count, value: num, className });
                         }
-                        return num;
                     });
                 }
                 return found;
@@ -102,9 +94,9 @@ export default function DisplayDay({ day, data, daySearch }) {
             foundPrev               = processData(tempDayPrev);
         }
 
-        found.sort((a,b)=>(a.value < b.value ? 1 : -1));
-        foundNext.sort((a,b)=>(a.value < b.value ? 1 : -1));
-        foundPrev.sort((a,b)=>(a.value < b.value ? 1 : -1));
+        found.sort((a,b)=>(a.count < b.count ? 1 : -1));
+        foundNext.sort((a,b)=>(a.count < b.count ? 1 : -1));
+        foundPrev.sort((a,b)=>(a.count < b.count ? 1 : -1));
     }
     return (<div className='container-days'>
         <ul className='days'>

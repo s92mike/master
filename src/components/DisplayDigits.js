@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import DisplayTable from "./DisplayTable";
-import { getPossibleCombination, checkDouble } from "../functions/functions";
+import { getPossibleCombination, checkDouble, countTypeDraw } from "../functions/functions";
 
 export default function DisplayDigits(props) {
   const [data, setData]                               = useState([]);
@@ -58,7 +58,6 @@ export default function DisplayDigits(props) {
   //Initialization of variables
   const swertresData    = Array.from(data);
   const swertresSearch  = Array.from(searchPossibilities);
-  const countType       = ['select', '2PM', '5PM', '9PM'];
   let DisplayData       = BlankElement;
   let possibilities     = getPossibleCombination(searchData);
   let resultSearch      = props.resultText.map((propsItem)=>{
@@ -85,7 +84,7 @@ export default function DisplayDigits(props) {
         const found = swertresSearch.find(el=>item === el);
         if (found !== undefined) {
           let colInd1, colInd2, colInd3, indCounter = 3;
-          switch(countType[count]){
+          switch(countTypeDraw[count]){
             case '2PM':
               colInd1 = ind;
               colInd2 = ind+1;
@@ -213,7 +212,7 @@ export default function DisplayDigits(props) {
   if (false) {
     DisplayData = () => (<div className="tv" key="tv-123">
     <DisplayTable
-      countType={countType}
+      countType={countTypeDraw}
       checkCount={checkCount}
       swertresData={swertresData}
       BlankElement={BlankElement}
