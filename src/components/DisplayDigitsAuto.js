@@ -2,7 +2,7 @@ import React from "react";
 import {
   checkIndexArray,
   getPossibleCombination,
-  countTypeDraw
+  countTypeDraw,
 } from "../functions/functions";
 
 export default function DisplayDigitAuto({ data }) {
@@ -32,12 +32,12 @@ export default function DisplayDigitAuto({ data }) {
 
   const addCheckCount = (index) => {
     if (index > maxNum) {
-        index = 1;
+      index = 1;
     } else if (index < 1) {
-        index = maxNum
+      index = maxNum;
     }
     return index;
-  }
+  };
 
   const getCorrectIndex = (allData, length, currentIndex) => {
     if (allData[currentIndex][length].length > 0) {
@@ -52,37 +52,42 @@ export default function DisplayDigitAuto({ data }) {
 
   const getFoundDikit = (allData, currentNum, indexing) => {
     return {
-        value: currentNum,
-        indexing
-    }
-  }
+      value: currentNum,
+      indexing,
+    };
+  };
 
-  const getDikit = (allData, num, returnArr = [], indexing = { ind1: 0, ind2: 0, count: 1 }) => {
+  const getDikit = (
+    allData,
+    num,
+    returnArr = [],
+    indexing = { ind1: 0, ind2: 0, count: 1 }
+  ) => {
     if (indexing.ind1 > maxDays && indexing.ind2 > maxData) {
-        return returnArr;
+      return returnArr;
     }
     const poss = getPossibleCombination(num);
     const currentNum = allData[indexing.ind1][indexing.ind2];
-    const found = poss.find(el=>el===currentNum);
+    const found = poss.find((el) => el === currentNum);
     if (found !== undefined && num !== `000`) {
-        returnArr.push(getFoundDikit(allData, currentNum, indexing));
+      returnArr.push(getFoundDikit(allData, currentNum, indexing));
     }
-    let tempInd2 = indexing.ind2+1;
+    let tempInd2 = indexing.ind2 + 1;
     let tempInd1 = indexing.ind1;
     if (tempInd2 > maxData) {
-        tempInd2 = 0;
-        tempInd1++;
-        if (tempInd1 > maxDays) {
-            tempInd2 = indexing.ind2+1;
-        }
+      tempInd2 = 0;
+      tempInd1++;
+      if (tempInd1 > maxDays) {
+        tempInd2 = indexing.ind2 + 1;
+      }
     }
 
     indexing = {
-        ...indexing,
-        ind1: tempInd1,
-        ind2: tempInd2,
-        count: addCheckCount(indexing.count+1)
-    }
+      ...indexing,
+      ind1: tempInd1,
+      ind2: tempInd2,
+      count: addCheckCount(indexing.count + 1),
+    };
     return getDikit(allData, num, returnArr, indexing);
   };
 
@@ -93,22 +98,29 @@ export default function DisplayDigitAuto({ data }) {
     countType,
     returnArr = []
   ) => {
-    let { currentIndex, listLength } = content;
-
-    returnArr.push({
-      value: allData[currentIndex][listLength],
-      content: { currentIndex, listLength, countType },
-    });
-    countList++;
-
     if (countList > maxList) {
       return returnArr;
     }
 
+    let { currentIndex, listLength } = content;
+    returnArr.push({
+      value: allData[currentIndex][listLength],
+      // content: { currentIndex, listLength, countType },
+      contents: getDikit(allData, allData[currentIndex][listLength], [], {
+        ind1: currentIndex,
+        ind2: listLength,
+        count: countType,
+      }),
+    });
+    countList++;
+
     countType = updateCountType(countType + 1);
     listLength--;
     if (countType === 1) {
-      currentIndex = checkIndexArray({ num: currentIndex - 1, length: maxDays });
+      currentIndex = checkIndexArray({
+        num: currentIndex - 1,
+        length: maxDays,
+      });
       listLength = dTLength;
       if (allData[currentIndex][listLength].length === 0) {
         listLength = getCorrectIndex(
@@ -140,15 +152,13 @@ export default function DisplayDigitAuto({ data }) {
     let getNum = checkNum(dataToday[dTLength], dataToday, dTLength);
     listLength = getNum.length;
     firstNum = getNum.num;
-    
-
     if (firstNum.length === 0) {
       currentIndex = checkIndexArray({ num: dataIndex - 1, length: maxDays });
       listLength = dTLength;
       count = 1;
     }
   }
-  if (listNum.length <= 0){
+  if (listNum.length <= 0) {
     listNum = getListNum(data, { currentIndex, listLength }, 1, count);
   }
   console.log(listNum, `final`);

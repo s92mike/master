@@ -1,18 +1,19 @@
 //get all possible combination
 export const getPossibleCombination = (num) => {
-  const chars = Array.from(num);
-  const possibility = [];
-  chars.map((item, iind) => {
-    const tempItem = chars.filter((el, i) => i !== iind);
-    tempItem.map((val, ind) => {
-      let tempVal = tempItem[ind + 1] ?? tempItem[ind - 1];
-      let value = `${item}${val}${tempVal}`;
-      possibility.push(value);
-      return val;
+  if (num.length > 0) {
+    const chars = Array.from(num);
+    const possibility = [];
+    chars.forEach((item, iind) => {
+      const tempItem = chars.filter((el, i) => i !== iind);
+      tempItem.forEach((val, ind) => {
+        let tempVal = tempItem[ind + 1] ?? tempItem[ind - 1];
+        let value = `${item}${val}${tempVal}`;
+        possibility.push(value);
+      });
     });
-    return item;
-  });
-  return [...new Set(possibility)];
+    return [...new Set(possibility)];
+  }
+  return [];
 };
 
 export const checkLengthDigitKeyCode = ({ l, value, keyCode }) => {

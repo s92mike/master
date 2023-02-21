@@ -9,7 +9,7 @@ export default function DisplayDigits(props) {
   const [searchData, setSearchData]                   = useState(props.searchText);
 
   useEffect(()=>{
-    if (searchData !== props.searchText) {
+    if (searchData !== props.searchText && searchData.length > 0) {
       setSearchData(props.searchText);
       setSearchPossibilities([]);
     }
@@ -192,7 +192,7 @@ export default function DisplayDigits(props) {
       })
     });
   }
-  if (searchDataGroup.length > 0 && searchData !== '000' && searchData !== '   ') {
+  if (searchDataGroup.length > 0 && searchData !== '000' && searchData !== '') {
     DisplayGroup = ()=>(<>{searchDataGroup.map((result)=>(<ul className="Group" key={`Group`+Math.random()}>
       {result.group.map((res)=>{
         let found       = '';
