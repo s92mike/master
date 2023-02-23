@@ -65,9 +65,7 @@ export default function DisplayDigitAuto({ data }) {
     return dayInd;
   }
 
-  const checkLengthAndValue = (arr) => {
-    return arr.length > 0 && arr !== '000';
-  }
+  const checkLengthAndValue = (arr) => (arr.length > 0 && arr !== '000');
 
   const getFoundDikit = (allData, currentNum, indexing) => {
     const { ind1, ind2, count } = indexing;
@@ -243,9 +241,27 @@ export default function DisplayDigitAuto({ data }) {
   }
   let tempArr = [];
   let classNameArr = [];
+  let finalArr = [];
+  listNum.forEach((item, ind)=>{
+    finalArr[ind] = [];
+    item.contents.forEach((item2) => {
+      const poss = getPossibleCombination(item2[0]);
+      let save = true;
+      finalArr[ind].forEach((item3, ind3) => {
+        const found = poss.find((el) => el === item3[0]);
+        if (found !== undefined) {
+          save = false;
+          finalArr[ind][ind3][1] = finalArr[ind][ind3][1] + item2[1];
+        }
+      })
+      if (save) {
+        finalArr[ind].push(item2)
+      }
+    })
+  });
   listNum.forEach((item, ind) => {
     tempArr[ind] = [];
-    item.contents.forEach((item2) => {
+    finalArr[ind].forEach((item2) => {
       tempArr[ind].push(item2[0]);
     })
   });
@@ -280,7 +296,7 @@ export default function DisplayDigitAuto({ data }) {
           <div className='theory' key={`display-theory-` + ind}>
             <p><b>{item.value}</b></p>
             <ul className='first'>
-              {item.contents.map((item2, ind2) => (
+              {finalArr[ind].map((item2, ind2) => (
                 <li className={classNameArr[ind][ind2]} key={`item-v1-`+ind2}>{item2[0]} - {item2[1]}</li>
               ))}
             </ul>
