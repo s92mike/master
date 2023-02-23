@@ -241,6 +241,28 @@ export default function DisplayDigitAuto({ data }) {
   if (listNum.length <= 0) {
     listNum = getListNum(data, { currentIndex, listLength }, 1, count);
   }
+  let tempArr = [];
+  let classNameArr = [];
+  listNum.forEach((item, ind) => {
+    tempArr[ind] = [];
+    item.contents.forEach((item2) => {
+      tempArr[ind].push(item2[0]);
+    })
+  });
+  listNum.forEach((item, ind) => {
+    classNameArr[ind] = [];
+    item.contents.forEach((item2, ind2) => {
+      tempArr.forEach((item3, ind3) => {
+        if (ind !== ind3) {
+          const found = item3.find((el) => el === item2[0]);
+          classNameArr[ind][ind2] = ``;
+          if (found !== undefined){
+            classNameArr[ind][ind2] = `found`;
+          }
+        }
+      })
+    })
+  })
   return (
     <>
       <p>
@@ -259,7 +281,7 @@ export default function DisplayDigitAuto({ data }) {
             <p><b>{item.value}</b></p>
             <ul className='first'>
               {item.contents.map((item2, ind2) => (
-                <li key={`item-v1-`+ind2}>{item2[0]} - {item2[1]}</li>
+                <li className={classNameArr[ind][ind2]} key={`item-v1-`+ind2}>{item2[0]} - {item2[1]}</li>
               ))}
             </ul>
           </div>
