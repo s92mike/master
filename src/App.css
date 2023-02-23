@@ -131,6 +131,8 @@
 
 .App .theory-container {
   display: flex;
+  width: 100%;
+  overflow-x: scroll;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
