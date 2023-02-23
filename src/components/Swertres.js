@@ -13,7 +13,7 @@ export default function Swertres() {
   const [daySearch, setDaySearch] = useState(""); // used by Search Day Search number
   const [data, setData] = useState([]); // used by DisplayDigit, DisplayDay
   const [options, setOptions] = useState("sidebyside"); // used by TabSelector
-  const [searchText, setSearchText] = useState(""); // used by SearchButton, DisplayDigit
+  const [searchText, setSearchText] = useState("   "); // used by SearchButton, DisplayDigit
   const [resultText, setResultText] = useState([
     "",
     "",

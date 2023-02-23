@@ -192,7 +192,7 @@ export default function DisplayDigits(props) {
       })
     });
   }
-  if (searchDataGroup.length > 0 && searchData !== '000' && searchData !== '') {
+  if (searchDataGroup.length > 0 && searchData !== '000' && searchData.length > 0) {
     DisplayGroup = ()=>(<>{searchDataGroup.map((result)=>(<ul className="Group" key={`Group`+Math.random()}>
       {result.group.map((res)=>{
         let found       = '';

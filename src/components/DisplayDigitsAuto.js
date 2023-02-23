@@ -1,8 +1,7 @@
 import React from "react";
 import {
   checkIndexArray,
-  getPossibleCombination,
-  countTypeDraw,
+  getPossibleCombination
 } from "../functions/functions";
 
 export default function DisplayDigitAuto({ data }) {
@@ -50,45 +49,131 @@ export default function DisplayDigitAuto({ data }) {
     );
   };
 
+  const checkZeros = (allData, dayInd, drawOneInd, drawTwoInd, drawThreeInd) => {
+    if ( allData[dayInd][drawOneInd] === '000'
+    && allData[dayInd][drawTwoInd] === '000'
+    && allData[dayInd][drawThreeInd] === '000' ) {
+      let tempInd = dayInd;
+      dayInd = checkIndexArray({ num: dayInd - 1, length: maxDays });
+      if (dayInd === 0 && tempInd === 30) {
+        drawOneInd    = checkIndexArray({ num: drawOneInd - 3, length: maxData });
+        drawTwoInd    = checkIndexArray({ num: drawTwoInd - 3, length: maxData });
+        drawThreeInd  = checkIndexArray({ num: drawThreeInd - 3, length: maxData });
+      }
+      return checkZeros(allData, dayInd, drawOneInd, drawTwoInd, drawThreeInd);
+    }
+    return dayInd;
+  }
+
+  const checkLengthAndValue = (arr) => {
+    return arr.length > 0 && arr !== '000';
+  }
+
   const getFoundDikit = (allData, currentNum, indexing) => {
+    const { ind1, ind2, count } = indexing;
+    let dayOneInd, dayTwoInd, dayThreeInd, drawOneInd, drawTwoInd, drawThreeInd;
+    let flagOne     = true;
+    let flagTwo     = true;
+    let flagThree   = true;
+    let resultArr   = [];
+    dayOneInd       = checkIndexArray({ num: ind1 - 1, length: maxDays });
+    dayTwoInd       = ind1;
+    dayThreeInd     = checkIndexArray({ num: ind1 + 1, length: maxDays });
+    switch (count) {
+      case 1:
+        drawOneInd    = ind2;
+        drawTwoInd    = ind2+1;
+        drawThreeInd  = ind2+2;
+        flagOne       = false;
+        break;
+      case 2:
+        drawOneInd    = ind2-1;
+        drawTwoInd    = ind2;
+        drawThreeInd  = ind2+1;
+        flagTwo       = false;
+        break;
+      case 3:
+        drawOneInd    = ind2-2;
+        drawTwoInd    = ind2-1;
+        drawThreeInd  = ind2;
+        flagThree     = false;
+        break;
+      default: break;
+    }
+      
+    dayOneInd = checkZeros(allData, dayOneInd, drawOneInd, drawTwoInd, drawThreeInd);
+
+    if (checkLengthAndValue(allData[dayOneInd][drawOneInd])){
+      resultArr.push(allData[dayOneInd][drawOneInd]);
+    }
+    if (checkLengthAndValue(allData[dayOneInd][drawTwoInd])) {
+      resultArr.push(allData[dayOneInd][drawTwoInd]);
+    }
+    if (checkLengthAndValue(allData[dayOneInd][drawThreeInd])) {
+      resultArr.push(allData[dayOneInd][drawThreeInd]);
+    }
+
+    if (flagOne && checkLengthAndValue(allData[dayTwoInd][drawOneInd])) {
+      resultArr.push(allData[dayTwoInd][drawOneInd]);
+    }
+    if (flagTwo && checkLengthAndValue(allData[dayTwoInd][drawTwoInd])) {
+      resultArr.push(allData[dayTwoInd][drawTwoInd]);
+    }
+    if (flagThree && checkLengthAndValue(allData[dayTwoInd][drawThreeInd])) {
+      resultArr.push(allData[dayTwoInd][drawThreeInd]);
+    }
+
+    if (checkLengthAndValue(allData[dayThreeInd][drawOneInd])) {
+      resultArr.push(allData[dayThreeInd][drawOneInd]);
+    }
+    if (checkLengthAndValue(allData[dayThreeInd][drawTwoInd])){
+      resultArr.push(allData[dayThreeInd][drawTwoInd]);
+    }
+    if (checkLengthAndValue(allData[dayThreeInd][drawThreeInd])) {
+      resultArr.push(allData[dayThreeInd][drawThreeInd]);
+    }
+
+    resultArr.sort((a,b)=>(a < b ? 1 : -1));
+    
     return {
-      value: currentNum,
       indexing,
+      value: currentNum,
+      resultArr
     };
   };
 
   const getDikit = (
     allData,
     num,
-    returnArr = [],
-    indexing = { ind1: 0, ind2: 0, count: 1 }
+    returnArr = []
   ) => {
-    if (indexing.ind1 > maxDays && indexing.ind2 > maxData) {
-      return returnArr;
-    }
+    count = 1;
     const poss = getPossibleCombination(num);
-    const currentNum = allData[indexing.ind1][indexing.ind2];
-    const found = poss.find((el) => el === currentNum);
-    if (found !== undefined && num !== `000`) {
-      returnArr.push(getFoundDikit(allData, currentNum, indexing));
-    }
-    let tempInd2 = indexing.ind2 + 1;
-    let tempInd1 = indexing.ind1;
-    if (tempInd2 > maxData) {
-      tempInd2 = 0;
-      tempInd1++;
-      if (tempInd1 > maxDays) {
-        tempInd2 = indexing.ind2 + 1;
+    const tempArr = []; // for tracking data
+    allData.forEach((itemArr, ind1) => {
+      itemArr.forEach((itemVal, ind2) => {
+        const found = poss.find((el) => el === itemVal);
+        const indexing = { ind1, ind2, count };
+        if( found !== undefined && num !== '000' ) {
+          const resultObj = getFoundDikit(allData, itemVal, indexing);
+          returnArr = [...returnArr, ...resultObj.resultArr]
+          tempArr.push(resultObj); // for tracking data
+        }
+        count = addCheckCount(count + 1)
+      });
+    });
+    const reducedCount = returnArr.reduce((acc, cur) => {
+      if (cur in acc) {
+        acc[cur]++;
+      } else {
+        acc[cur] = 1;
       }
-    }
+      return acc;
+    }, {});
 
-    indexing = {
-      ...indexing,
-      ind1: tempInd1,
-      ind2: tempInd2,
-      count: addCheckCount(indexing.count + 1),
-    };
-    return getDikit(allData, num, returnArr, indexing);
+    const sorted = Object.entries(reducedCount)
+      .sort((a, b) => (a[1] < b[1] ? 1 : -1));
+    return sorted;
   };
 
   const getListNum = (
@@ -105,12 +190,7 @@ export default function DisplayDigitAuto({ data }) {
     let { currentIndex, listLength } = content;
     returnArr.push({
       value: allData[currentIndex][listLength],
-      // content: { currentIndex, listLength, countType },
-      contents: getDikit(allData, allData[currentIndex][listLength], [], {
-        ind1: currentIndex,
-        ind2: listLength,
-        count: countType,
-      }),
+      contents: getDikit(allData, allData[currentIndex][listLength], []),
     });
     countList++;
 
@@ -161,10 +241,8 @@ export default function DisplayDigitAuto({ data }) {
   if (listNum.length <= 0) {
     listNum = getListNum(data, { currentIndex, listLength }, 1, count);
   }
-  console.log(listNum, `final`);
   return (
     <>
-      <h2>Theory One Coming Soon!!!</h2>
       <p>
         <b>Latest Result from Right to Left</b>
       </p>
@@ -175,6 +253,18 @@ export default function DisplayDigitAuto({ data }) {
           </li>
         ))}
       </ul>
+      <div className="theory-container">
+        {listNum.map((item, ind) => (
+          <div className='theory' key={`display-theory-` + ind}>
+            <p><b>{item.value}</b></p>
+            <ul className='first'>
+              {item.contents.map((item2, ind2) => (
+                <li key={`item-v1-`+ind2}>{item2[0]} - {item2[1]}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

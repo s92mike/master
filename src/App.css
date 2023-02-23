@@ -90,6 +90,7 @@
     justify-content: center;
 }
 
+.App .theory .first,
 .App .days,
 .App .Group {
   list-style: none;
@@ -120,6 +121,17 @@
   display: block;
 }
 
+.App .theory {
+  max-width: 80px;
+}
+
+.App .theory .first {
+  width: 80px;
+}
+
+.App .theory-container {
+  display: flex;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
