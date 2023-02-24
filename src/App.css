@@ -91,6 +91,7 @@
     justify-content: center;
 }
 
+.App .everything,
 .App .theory .first,
 .App .days,
 .App .Group {
@@ -130,6 +131,15 @@
   width: 80px;
 }
 
+.App .everything,
+.App .master.theory-1 {
+  width: 100%;
+  overflow-x: scroll;
+}
+.App .everything li {
+  text-align: left;
+  width: auto;
+}
 .App .theory-container {
   display: flex;
   width: 100%;

@@ -239,8 +239,10 @@ export default function DisplayDigitAuto({ data }) {
   if (listNum.length <= 0) {
     listNum = getListNum(data, { currentIndex, listLength }, 1, count);
   }
-  let classNameArr = [];
+  // let classNameArr = [];
   let finalArr = [];
+  let temp = [];
+  let temp2 = [];
   listNum.forEach((item, ind)=>{
     finalArr[ind] = [];
     item.contents.forEach((item2) => {
@@ -254,34 +256,72 @@ export default function DisplayDigitAuto({ data }) {
         }
       })
       if (save) {
-        finalArr[ind].push(item2)
+        finalArr[ind].push([...item2, item.value]);
       }
     })
   })
   finalArr.forEach((item, ind) => {
-    classNameArr[ind] = [];
+    // classNameArr[ind] = [];
     item.sort((a, b) => b[1] - a[1]);
-    item.forEach((item2, ind2) => {
-      finalArr.forEach((item3, ind3) => {
-        if (ind !== ind3) {
-          const found = item3.find((el) => el === item2[0]);
-          classNameArr[ind][ind2] = ``;
-          if (found !== undefined){
-            classNameArr[ind][ind2] = `found`;
-          }
-        }
-      })
+    item.forEach((item2) => {
+      temp.push(item2);
+      // classNameArr[ind][ind2] = ``;
+      // finalArr.forEach((item3, ind3) => {
+      //   if (ind !== ind3) {
+      //     item3.forEach((item4) => {
+      //       const poss = getPossibleCombination(item2[0]);
+      //       const found = poss.find((el) => el === item4[0]);
+      //       if (found !== undefined){
+      //         classNameArr[ind][ind2] = `found`;
+      //       }
+      //     })
+      //   }
+      // })
     })
   })
+  temp.forEach((itemTemp) => {
+    const poss = getPossibleCombination(itemTemp[0]);
+    let save = true;
+    temp2.forEach((itemTemp3, ind3) => {
+      const found = poss.find((el) => el === itemTemp3[0]);
+      if (found !== undefined) {
+        save = false;
+        temp2[ind3] = [
+          ...itemTemp3.slice(0,1),
+          itemTemp3[1]+itemTemp[1],
+          ...itemTemp3.slice(2),
+          itemTemp[2]
+        ];
+      }
+    })
+    if (save) {
+      temp2.push(itemTemp);
+    }
+  })
+  temp2.sort((a, b) => b[1] - a[1]);
   return (
     <>
       <p>
-        <b>Latest Result from Right to Left</b>
+        <b>Latest Result from Left to Right</b>
       </p>
       <ul className="master theory-1">
         {listNum.map((item, ind) => (
           <li className="guide" key={`theory-` + ind}>
             {item.value}
+          </li>
+        ))}
+      </ul>
+      <ul className="everything">
+        {temp2.map((item, ind) => (
+          <li key={`item-v1-` + ind}>
+            {item.map((item2, ind2) => {
+              const Bold    = () => (1 === ind2 ? <b>{item2}</b> : <>{item2}</>);
+              const dash    = (1 === ind2 ? `-` : ``);
+              const openP   = (2 === ind2 ? ` ( ` : ``);
+              const closeP  = (item.length - 1 === ind2 ? ` )` : ``);
+              const camma   = (2 < ind2 ? `, ` : ``);
+              return <>{dash + openP + camma}<Bold/>{closeP}</>;
+            })}
           </li>
         ))}
       </ul>
@@ -291,7 +331,9 @@ export default function DisplayDigitAuto({ data }) {
             <p><b>{item.value}</b></p>
             <ul className='first'>
               {finalArr[ind].map((item2, ind2) => (
-                <li className={classNameArr[ind][ind2]} key={`item-v1-`+ind2}>{item2[0]} - {item2[1]}</li>
+                <li 
+                  // className={classNameArr[ind][ind2]} 
+                  key={`item-v1-`+ind2}>{item2[0]} - {item2[1]}</li>
               ))}
             </ul>
           </div>
