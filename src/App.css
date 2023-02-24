@@ -138,7 +138,7 @@
 }
 .App .everything li {
   text-align: left;
-  width: auto;
+  width: 60px;
 }
 .App .theory-container {
   display: flex;
