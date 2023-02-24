@@ -170,7 +170,7 @@ export default function DisplayDigitAuto({ data }) {
     }, {});
 
     const sorted = Object.entries(reducedCount)
-      .sort((a, b) => (a[1] < b[1] ? 1 : -1));
+      .sort((a, b) => (a[1] > b[1] ? 1 : -1));
     return sorted;
   };
 
@@ -239,7 +239,6 @@ export default function DisplayDigitAuto({ data }) {
   if (listNum.length <= 0) {
     listNum = getListNum(data, { currentIndex, listLength }, 1, count);
   }
-  let tempArr = [];
   let classNameArr = [];
   let finalArr = [];
   listNum.forEach((item, ind)=>{
@@ -258,17 +257,12 @@ export default function DisplayDigitAuto({ data }) {
         finalArr[ind].push(item2)
       }
     })
-  });
-  listNum.forEach((item, ind) => {
-    tempArr[ind] = [];
-    finalArr[ind].forEach((item2) => {
-      tempArr[ind].push(item2[0]);
-    })
-  });
-  listNum.forEach((item, ind) => {
+  })
+  finalArr.forEach((item, ind) => {
     classNameArr[ind] = [];
-    item.contents.forEach((item2, ind2) => {
-      tempArr.forEach((item3, ind3) => {
+    item.sort((a, b) => b[1] - a[1]);
+    item.forEach((item2, ind2) => {
+      finalArr.forEach((item3, ind3) => {
         if (ind !== ind3) {
           const found = item3.find((el) => el === item2[0]);
           classNameArr[ind][ind2] = ``;
