@@ -315,12 +315,12 @@ export default function DisplayDigitAuto({ data }) {
         {temp2.map((item, ind) => (
           <li key={`item-v1-` + ind}>
             {item.map((item2, ind2) => {
-              const Bold    = () => (1 === ind2 ? <b>{item2}</b> : <>{item2}</>);
+              const Bold    = () => (1 === ind2 ? <b>{item2}</b> : (2 > ind2) ? <>{item2}</> : <></>);
               const dash    = (1 === ind2 ? `-` : ``);
-              const openP   = (2 === ind2 ? ` ( ` : ``);
-              const closeP  = (item.length - 1 === ind2 ? ` )` : ``);
-              const camma   = (2 < ind2 ? `, ` : ``);
-              return <>{dash + openP + camma}<Bold/>{closeP}</>;
+              // const openP   = (2 === ind2 ? ` ( ` : ``);
+              // const closeP  = (item.length - 1 === ind2 ? ` )` : ``);
+              // const camma   = (2 < ind2 ? `, ` : ``);
+              return <>{dash}<Bold/></>;
             })}
           </li>
         ))}
