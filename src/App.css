@@ -36,6 +36,7 @@
   background-color: #fff700;
 }
 
+.App .everything .found button,
 .App .theory .first .found,
 .App .days li.found,
 .App .Group li.found,
@@ -144,6 +145,25 @@
   display: flex;
   width: 100%;
   overflow-x: scroll;
+}
+.App .everything li {
+  position: relative;
+}
+.App .everything li .react-tooltip {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  background-color: #61dafb;
+  border-radius: 6px;
+  border: 1px solid #17596a;
+  width: 300px;
+  text-align: center;
+}
+.App .everything .found button {
+  border-color: #00ff55;
+  border-radius: 6px;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

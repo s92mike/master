@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import SingleSearchButton from "./SingleSearchButton";
 import {
   checkIndexArray,
   getPossibleCombination
 } from "../functions/functions";
 
+import { Tooltip } from 'react-tooltip';
+
 export default function DisplayDigitAuto({ data }) {
+  const [searchText, setSearchText]   = useState('');  
   const today = new Date();
   const currentDay = today.getDate();
   const dataIndex = currentDay - 1;
@@ -169,8 +173,7 @@ export default function DisplayDigitAuto({ data }) {
       return acc;
     }, {});
 
-    const sorted = Object.entries(reducedCount)
-      .sort((a, b) => (a[1] > b[1] ? 1 : -1));
+    const sorted = Object.entries(reducedCount).sort((a, b) => (a[1] > b[1] ? 1 : -1));
     return sorted;
   };
 
@@ -299,6 +302,9 @@ export default function DisplayDigitAuto({ data }) {
     }
   })
   temp2.sort((a, b) => b[1] - a[1]);
+  function changeSearch(num) {
+    setSearchText(num)
+  }
   return (
     <>
       <p>
@@ -311,17 +317,28 @@ export default function DisplayDigitAuto({ data }) {
           </li>
         ))}
       </ul>
+      <SingleSearchButton onSearch={changeSearch.bind(this)}/>
       <ul className="everything">
         {temp2.map((item, ind) => (
-          <li key={`item-v1-` + ind}>
-            {item.map((item2, ind2) => {
-              const Bold    = () => (1 === ind2 ? <b>{item2}</b> : (2 > ind2) ? <>{item2}</> : <></>);
-              const dash    = (1 === ind2 ? `-` : ``);
-              // const openP   = (2 === ind2 ? ` ( ` : ``);
-              // const closeP  = (item.length - 1 === ind2 ? ` )` : ``);
-              // const camma   = (2 < ind2 ? `, ` : ``);
-              return <>{dash}<Bold/></>;
-            })}
+          <li 
+            key={`item-v1-` + ind}
+            className={getPossibleCombination(searchText).find((el) => el === item[0]) !== undefined ? 'found' : ''}
+          >
+            <button 
+              key={`button-draw-` + ind}
+              data-tooltip-id={`draw-` + ind}
+              data-tooltip-content={item.splice(2).join(`, `)} 
+              data-tooltip-place="top">
+              {item.map((item2, ind2) => {
+                const Bold    = () => (1 === ind2 ? <b>{item2}</b> : (2 > ind2) ? <>{item2}</> : <></>);
+                const dash    = (1 === ind2 ? `-` : ``);
+                // const openP   = (2 === ind2 ? ` ( ` : ``);
+                // const closeP  = (item.length - 1 === ind2 ? ` )` : ``);
+                // const camma   = (2 < ind2 ? `, ` : ``);
+                return <>{dash}<Bold/></>;
+              })}
+            </button>
+            <Tooltip id={`draw-` + ind} />
           </li>
         ))}
       </ul>

@@ -38,3 +38,17 @@ export const checkDouble = (num) =>
   Array.from(num).some((item, index) => num.indexOf(item) !== index);
 
 export const countTypeDraw = ["select", "2PM", "5PM", "9PM"];
+
+export const addZero = (number) => {
+  let final = number;
+  if (number.length < 3){
+      final = `0${number}`;
+      if (number.length === 1) {
+          final = `00${number}`;
+      }
+      if (number.length === 0) {
+          final = ``;
+      }
+  }
+  return final;
+}

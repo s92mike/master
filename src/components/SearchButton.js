@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { checkLengthDigitKeyCode } from "../functions/functions";
+import { checkLengthDigitKeyCode, addZero } from "../functions/functions";
 
 export default function SearchButton(props) {
     const [searchText, setSearchText]   = useState(props.searchText);
@@ -34,19 +34,6 @@ export default function SearchButton(props) {
     }
     function checkDigitChangeSearch (item) {
         setSearchText(item.target.value);
-    }
-    const addZero = (number) => {
-        let final = number;
-        if (number.length < 3){
-            final = `0${number}`;
-            if (number.length === 1) {
-                final = `00${number}`;
-            }
-            if (number.length === 0) {
-                final = ``;
-            }
-        }
-        return final;
     }
 
     const submitDigits = () => {
