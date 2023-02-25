@@ -44,6 +44,7 @@
   background-color: #00ff55;
 }
 
+.App .everything .exclude button,
 .App .master li.found2 {
   background-color: #022d10;
   color: #fff;
@@ -163,6 +164,10 @@
 }
 .App .everything .found button {
   border-color: #00ff55;
+  border-radius: 6px;
+}
+.App .everything .exclude button {
+  background-color: #0a2513;
   border-radius: 6px;
 }
 @media (prefers-reduced-motion: no-preference) {

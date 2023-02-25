@@ -246,8 +246,10 @@ export default function DisplayDigitAuto({ data }) {
   let finalArr = [];
   let temp = [];
   let temp2 = [];
+  let temp3 = [];
   listNum.forEach((item, ind)=>{
     finalArr[ind] = [];
+    temp3 = [...temp3, ...getPossibleCombination(item.value)];
     item.contents.forEach((item2) => {
       const poss = getPossibleCombination(item2[0]);
       let save = true;
@@ -263,23 +265,10 @@ export default function DisplayDigitAuto({ data }) {
       }
     })
   })
-  finalArr.forEach((item, ind) => {
-    // classNameArr[ind] = [];
+  finalArr.forEach((item) => {
     item.sort((a, b) => b[1] - a[1]);
     item.forEach((item2) => {
       temp.push(item2);
-      // classNameArr[ind][ind2] = ``;
-      // finalArr.forEach((item3, ind3) => {
-      //   if (ind !== ind3) {
-      //     item3.forEach((item4) => {
-      //       const poss = getPossibleCombination(item2[0]);
-      //       const found = poss.find((el) => el === item4[0]);
-      //       if (found !== undefined){
-      //         classNameArr[ind][ind2] = `found`;
-      //       }
-      //     })
-      //   }
-      // })
     })
   })
   temp.forEach((itemTemp) => {
@@ -322,7 +311,7 @@ export default function DisplayDigitAuto({ data }) {
         {temp2.map((item, ind) => (
           <li 
             key={`item-v1-` + ind}
-            className={getPossibleCombination(searchText).find((el) => el === item[0]) !== undefined ? 'found' : ''}
+            className={(getPossibleCombination(searchText).find((el) => el === item[0]) !== undefined ? 'found' : '') + (temp3.find((el) => el === item[0]) !== undefined ? ' exclude' : '')} 
           >
             <button 
               key={`button-draw-` + ind}
@@ -332,9 +321,6 @@ export default function DisplayDigitAuto({ data }) {
               {item.map((item2, ind2) => {
                 const Bold    = () => (1 === ind2 ? <b>{item2}</b> : (2 > ind2) ? <>{item2}</> : <></>);
                 const dash    = (1 === ind2 ? `-` : ``);
-                // const openP   = (2 === ind2 ? ` ( ` : ``);
-                // const closeP  = (item.length - 1 === ind2 ? ` )` : ``);
-                // const camma   = (2 < ind2 ? `, ` : ``);
                 return <>{dash}<Bold/></>;
               })}
             </button>
