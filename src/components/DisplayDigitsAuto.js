@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SingleSearchButton from "./SingleSearchButton";
+import MaxListDropDown from "./MaxListDropDown";
 import {
   checkIndexArray,
   getPossibleCombination
@@ -8,13 +9,13 @@ import {
 import { Tooltip } from 'react-tooltip';
 
 export default function DisplayDigitAuto({ data }) {
-  const [searchText, setSearchText]   = useState('');  
+  const [searchText, setSearchText] = useState('');
+  const [maxList, setMaxList] = useState(10);
   const today = new Date();
   const currentDay = today.getDate();
   const dataIndex = currentDay - 1;
   const dataToday = data[dataIndex];
   const maxNum = 3;
-  const maxList = 10;
   const maxDays = 30;
   const maxData = dataToday.length - 1;
 
@@ -242,7 +243,6 @@ export default function DisplayDigitAuto({ data }) {
   if (listNum.length <= 0) {
     listNum = getListNum(data, { currentIndex, listLength }, 1, count);
   }
-  // let classNameArr = [];
   let finalArr = [];
   let temp = [];
   let temp2 = [];
@@ -266,7 +266,7 @@ export default function DisplayDigitAuto({ data }) {
     })
   })
   finalArr.forEach((item) => {
-    item.sort((a, b) => b[1] - a[1]);
+    item.sort((a, b) => b[2] - a[2]);
     item.forEach((item2) => {
       temp.push(item2);
     })
@@ -291,8 +291,13 @@ export default function DisplayDigitAuto({ data }) {
     }
   })
   temp2.sort((a, b) => b[1] - a[1]);
+
   function changeSearch(num) {
     setSearchText(num)
+  }
+
+  function updateMaxList(num) {
+    setMaxList(num);
   }
   return (
     <>
@@ -306,6 +311,7 @@ export default function DisplayDigitAuto({ data }) {
           </li>
         ))}
       </ul>
+      <MaxListDropDown onChange={updateMaxList.bind(this)} />
       <SingleSearchButton onSearch={changeSearch.bind(this)}/>
       <ul className="everything">
         {temp2.map((item, ind) => (
@@ -316,13 +322,14 @@ export default function DisplayDigitAuto({ data }) {
             <button 
               key={`button-draw-` + ind}
               data-tooltip-id={`draw-` + ind}
-              data-tooltip-content={item.splice(2).join(`, `)} 
+              data-tooltip-content={[...item].splice(2).join(`, `)} 
               data-tooltip-place="top">
               {item.map((item2, ind2) => {
                 const Bold    = () => (1 === ind2 ? <b>{item2}</b> : (2 > ind2) ? <>{item2}</> : <></>);
                 const dash    = (1 === ind2 ? `-` : ``);
                 return <>{dash}<Bold/></>;
               })}
+              {`(` + ([...item].splice(2).length) + `)`}
             </button>
             <Tooltip id={`draw-` + ind} />
           </li>
@@ -335,7 +342,7 @@ export default function DisplayDigitAuto({ data }) {
             <ul className='first'>
               {finalArr[ind].map((item2, ind2) => (
                 <li 
-                  // className={classNameArr[ind][ind2]} 
+                  className={(getPossibleCombination(searchText).find((el) => el === item2[0]) !== undefined ? 'found' : '')} 
                   key={`item-v1-`+ind2}>{item2[0]} - {item2[1]}</li>
               ))}
             </ul>
