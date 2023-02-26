@@ -12,5 +12,6 @@ export default function MaxListDropDown({ onChange }) {
         <option value="10" selected>10</option>
         <option value="12">12</option>
         <option value="90">90</option>
+        <option value="180">90</option>
     </select>)
 }
