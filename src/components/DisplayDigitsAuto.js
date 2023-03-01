@@ -9,7 +9,7 @@ import {
 import { Tooltip } from 'react-tooltip';
 
 export default function DisplayDigitAuto({ data }) {
-  return <>Under maintainance!!!</>;
+  // return <>Under maintainance!!!</>;
   const [searchText, setSearchText] = useState('');
   const [maxList, setMaxList] = useState(24);
   const today = new Date();
