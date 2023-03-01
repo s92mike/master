@@ -173,6 +173,22 @@
   background-color: #0a2513;
   border-radius: 6px;
 }
+.App .everything .exclude.found button {
+  background-color: #093c1a;
+  color: #ff0000;
+}
+.App .everything .found.main button {
+  background-color: #fff700;
+  color: #000;
+}
+.App .everything .found.main.exclude button {
+  background-color: #ff0000;
+  color: #fff;
+}
+.App .everything .poss button {
+  background-color: #fff700;
+  color: #000;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

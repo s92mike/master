@@ -9,8 +9,9 @@ import {
 import { Tooltip } from 'react-tooltip';
 
 export default function DisplayDigitAuto({ data }) {
+  return <>Under maintainance!!!</>;
   const [searchText, setSearchText] = useState('');
-  const [maxList, setMaxList] = useState(10);
+  const [maxList, setMaxList] = useState(24);
   const today = new Date();
   const currentDay = today.getDate();
   const dataIndex = currentDay - 1;
@@ -18,6 +19,94 @@ export default function DisplayDigitAuto({ data }) {
   const maxNum = 3;
   const maxDays = 30;
   const maxData = dataToday.length - 1;
+  const manualArr = ['884','755','572','797','718','644'];
+  let possMA = [];
+  manualArr.forEach(item => { possMA = [...possMA, ...getPossibleCombination(item)];});
+
+  const arrangeNum = (num) => {
+    num = Array.from(num);
+    num.sort((a, b) => b - a);
+    if (parseInt(num[0]) !== parseInt(num[1]) + 1) {
+      const temp = num[0];
+      num.shift();
+      num.push(temp)
+    }
+    return num;
+  }
+
+  const checkOverNum = (num, prevNum, top, maxSet, position) => {
+    let condition1, condition2, conditionSet, returnCondition1, returnCondition2;
+    let returnNum = num;
+    if (position > 1){
+      if (top) {
+        conditionSet = (maxSet + 1);
+        condition1 = prevNum > conditionSet - position;
+        condition2 = num === 0;
+        returnCondition1 = prevNum + position - 1;
+        returnCondition2 = -(maxSet);
+      } else {
+        condition1 = num < position;
+        condition1 = num === maxSet;
+        returnCondition1 = num + position - 1;
+        returnCondition2 = num - position;
+      }
+      if (condition1 && condition2){
+        returnNum = returnCondition1 + returnCondition2
+      }
+    }
+    return returnNum;
+  }
+
+  const numberFrom = arrangeNum(searchText);
+  let numSetOne     = [];
+  let numSetTwo     = [];
+  let numSetThree   = [];
+  let numPrediction = [];
+  let firstSetNum, secondSetNum, thirdSetNum, fifthSetNum, sixthSetNum, seventhSetNum;
+  const maxSet = 9;
+  numberFrom.forEach((item, ind) => {
+    item = parseInt(item);
+    switch(ind) {
+      case 0:
+        firstSetNum   = checkIndexArray({num: item + 1, length: maxSet});
+        secondSetNum  = checkOverNum(checkIndexArray({ num: item + 2, length: maxSet }), item, true, maxSet, 2);
+        numSetOne     = [...numSetOne, secondSetNum, firstSetNum, item];
+        break;
+      case 1:          
+        firstSetNum   = checkIndexArray({num: item - 1, length: maxSet});
+        secondSetNum  = checkOverNum(checkIndexArray({num: item - 2, length: maxSet}), item, false, maxSet, 2);
+        numSetOne     = [...numSetOne, item, firstSetNum, secondSetNum];
+        break;
+      case 2:
+        firstSetNum   = checkOverNum(checkIndexArray({num: item - 3, length: maxSet}), item, false, maxSet, 3);
+        secondSetNum  = checkOverNum(checkIndexArray({num: item - 2, length: maxSet}), item, false, maxSet, 2);
+        thirdSetNum   = checkIndexArray({num: item - 1, length: maxSet});
+        fifthSetNum   = checkIndexArray({num: item + 1, length: maxSet});
+        sixthSetNum   = checkOverNum(checkIndexArray({num: item + 2, length: maxSet}), item, true, maxSet, 2);
+        seventhSetNum = checkOverNum(checkIndexArray({num: item + 3, length: maxSet}), item, true, maxSet, 3);
+        numSetTwo     = [...numSetTwo, firstSetNum, secondSetNum, thirdSetNum, item, fifthSetNum, sixthSetNum, seventhSetNum]
+        numSetTwo.forEach((item, ind) => {
+          numSetTwo.forEach((item2, ind2) => {
+            if (ind < ind2) {
+              numSetThree = [...numSetThree, item + '' + item2]
+            }
+          })
+        })
+        break;
+      default:
+        break;
+    }
+  })
+  numSetThree.forEach(item => {
+    numSetOne.forEach(item2 => {
+      numPrediction = [...numPrediction, item2 + '' + item];
+    })
+  })
+  // numPrediction = [];
+  const search_this = [];
+  numPrediction.forEach((e) => {
+    search_this.push(...getPossibleCombination(e));
+  })
 
   let listNum = [];
   let firstNum = ``;
@@ -317,7 +406,7 @@ export default function DisplayDigitAuto({ data }) {
         {temp2.map((item, ind) => (
           <li 
             key={`item-v1-` + ind}
-            className={(getPossibleCombination(searchText).find((el) => el === item[0]) !== undefined ? 'found' : '') + (temp3.find((el) => el === item[0]) !== undefined ? ' exclude' : '')} 
+            className={(getPossibleCombination(searchText).find((el) => el === item[0]) !== undefined ? 'found main' : search_this.find(el => el === item[0]) ? 'found' : manualArr.find(el => el === item[0]) ? 'poss' : '') + (temp3.find((el) => el === item[0]) !== undefined ? ' exclude' : '')} 
           >
             <button 
               key={`button-draw-` + ind}
@@ -342,7 +431,7 @@ export default function DisplayDigitAuto({ data }) {
             <ul className='first'>
               {finalArr[ind].map((item2, ind2) => (
                 <li 
-                  className={(getPossibleCombination(searchText).find((el) => el === item2[0]) !== undefined ? 'found' : '')} 
+                  className={(getPossibleCombination(searchText).find((el) => el === item2[0]) !== undefined ? 'found main' : search_this.find(el => el === item2[0]) ? 'found' : '')} 
                   key={`item-v1-`+ind2}>{item2[0]} - {item2[1]}</li>
               ))}
             </ul>
