@@ -19,7 +19,7 @@ export default function DisplayDigitAuto({ data }) {
   const maxNum = 3;
   const maxDays = 30;
   const maxData = dataToday.length - 1;
-  const manualArr = ['884','755','572','797','718','644'];
+  const manualArr = [];
   let possMA = [];
   manualArr.forEach(item => { possMA = [...possMA, ...getPossibleCombination(item)];});
 
@@ -279,11 +279,13 @@ export default function DisplayDigitAuto({ data }) {
     }
 
     let { currentIndex, listLength } = content;
-    returnArr.push({
-      value: allData[currentIndex][listLength],
-      contents: getDikit(allData, allData[currentIndex][listLength], []),
-    });
-    countList++;
+    if (allData[currentIndex][listLength] !== '000') {
+      returnArr.push({
+        value: allData[currentIndex][listLength],
+        contents: getDikit(allData, allData[currentIndex][listLength], []),
+      });
+      countList++;
+    }
 
     countType = updateCountType(countType + 1);
     listLength--;
