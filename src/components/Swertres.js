@@ -7,6 +7,8 @@ import DisplayDigits from "./DisplayDigits";
 import SearchByDayButton from "./SearchByDayButton";
 import DisplayDigitsAuto from "./DisplayDigitsAuto";
 import surigaoImage from "../surigao.jpg";
+import swertresImg from "../swertres_nums.jpg";
+import TheoryTwo from "../components/TheoryTwo";
 
 export default function Swertres() {
   const [day, setDay] = useState(""); // used by day SearchButton and DisplayDay, function SearchByDayButton
@@ -72,7 +74,11 @@ export default function Swertres() {
       break;
     case `image-surigao`:
       ButtonSelected = () => "";
-      ResultSection = () => <img className="custom-img" src={surigaoImage} alt=""/>;
+      ResultSection = () => <><img className="custom-img" src={surigaoImage} alt=""/><img className="custom-img" src={swertresImg} alt=""/></>;
+      break;
+    case `theory-two`:
+      ButtonSelected = () => "";
+      ResultSection = () => <TheoryTwo/>
       break;
     default:
       break;

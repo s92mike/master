@@ -140,7 +140,7 @@
 }
 .App .everything li {
   text-align: left;
-  width: 90px;
+  width: 60px;
 }
 .App .everything li button {
   min-height: 60px;
@@ -185,9 +185,24 @@
   background-color: #ff0000;
   color: #fff;
 }
+.App .everything .poss,
 .App .everything .poss button {
   background-color: #fff700;
   color: #000;
+}
+.App .everything .compute button {
+  background-color: #ffa500;
+}
+.App .everything .search_this button {
+  background-color: #4d3200;
+  color: #fff;
+}
+.App .everything .search_this.compute button {
+  background-color: #57006b;
+  color: #fff;
+}
+.App .everything .exclude button {
+  background-color: #0a2513;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

@@ -6,12 +6,12 @@ import {
   getPossibleCombination
 } from "../functions/functions";
 
-import { Tooltip } from 'react-tooltip';
+// import { Tooltip } from 'react-tooltip';
 
 export default function DisplayDigitAuto({ data }) {
   // return <>Under maintainance!!!</>;
   const [searchText, setSearchText] = useState('');
-  const [maxList, setMaxList] = useState(24);
+  const [maxList, setMaxList] = useState(9);
   const today = new Date();
   const currentDay = today.getDate();
   const dataIndex = currentDay - 1;
@@ -57,7 +57,7 @@ export default function DisplayDigitAuto({ data }) {
     return returnNum;
   }
 
-  const numberFrom = arrangeNum(searchText);
+  const numberFrom = arrangeNum('');
   let numSetOne     = [];
   let numSetTwo     = [];
   let numSetThree   = [];
@@ -102,12 +102,7 @@ export default function DisplayDigitAuto({ data }) {
       numPrediction = [...numPrediction, item2 + '' + item];
     })
   })
-  // numPrediction = [];
-  const search_this = [];
-  numPrediction.forEach((e) => {
-    search_this.push(...getPossibleCombination(e));
-  })
-
+  const numSearchDigit = Array.from('');
   let listNum = [];
   let firstNum = ``;
   let count = 1;
@@ -390,6 +385,25 @@ export default function DisplayDigitAuto({ data }) {
   function updateMaxList(num) {
     setMaxList(num);
   }
+  const rangeBig = 999;
+  const rangeSmall = 0;
+  let indexing = [];
+  temp2.forEach((item) => {
+    if (
+      item[1] <= rangeBig && item[1] >= rangeSmall 
+      // && temp3.find((el) => el === item[0]) === undefined
+    ) {
+      indexing = [...indexing, item[0]];
+    }
+  })
+  // for computation
+  const compute = false;
+  // numPrediction = [];
+  const search_this = [];
+  let displayNumPrediction = [];
+  indexing.forEach((e) => {
+    search_this.push(...getPossibleCombination(e));
+  })
   return (
     <>
       <p>
@@ -405,10 +419,21 @@ export default function DisplayDigitAuto({ data }) {
       <MaxListDropDown onChange={updateMaxList.bind(this)} />
       <SingleSearchButton onSearch={changeSearch.bind(this)}/>
       <ul className="everything">
+        {indexing.map((item, index) => (<li key={index + `masterMain`}>
+          {item}
+        </li>))}
+      </ul>
+      <ul className="everything">
         {temp2.map((item, ind) => (
           <li 
             key={`item-v1-` + ind}
-            className={(getPossibleCombination(searchText).find((el) => el === item[0]) !== undefined ? 'found main' : search_this.find(el => el === item[0]) ? 'found' : manualArr.find(el => el === item[0]) ? 'poss' : '') + (temp3.find((el) => el === item[0]) !== undefined ? ' exclude' : '')} 
+            className={
+              (item[1] <= rangeBig && item[1] >= rangeSmall && compute ? 'compute ' : '') + 
+              (getPossibleCombination(searchText).find((el) => el === item[0]) !== undefined ? 'found main' : '') +
+              (possMA.find(el => el === item[0]) ? ' poss' : '') +
+              (numSearchDigit.some(c => item[0].includes(c)) ? ' found' : '') +
+              // (search_this.find(el => el === item[0]) ? ' search_this' : '') + 
+              (temp3.find((el) => el === item[0]) !== undefined ? ' exclude' : '')} 
           >
             <button 
               key={`button-draw-` + ind}
@@ -416,13 +441,13 @@ export default function DisplayDigitAuto({ data }) {
               data-tooltip-content={[...item].splice(2).join(`, `)} 
               data-tooltip-place="top">
               {item.map((item2, ind2) => {
-                const Bold    = () => (1 === ind2 ? <b>{item2}</b> : (2 > ind2) ? <>{item2}</> : <></>);
+                const Bold    = () => (0 === ind2 ? <b>{item2}</b> : (1 === ind2) ? <>{item2}</> : <></>);
                 const dash    = (1 === ind2 ? `-` : ``);
                 return <>{dash}<Bold/></>;
               })}
-              {`(` + ([...item].splice(2).length) + `)`}
+              {/* {`(` + ([...item].splice(2).length) + `)`} */}
             </button>
-            <Tooltip id={`draw-` + ind} />
+            {/* <Tooltip id={`draw-` + ind} /> */}
           </li>
         ))}
       </ul>
@@ -433,7 +458,7 @@ export default function DisplayDigitAuto({ data }) {
             <ul className='first'>
               {finalArr[ind].map((item2, ind2) => (
                 <li 
-                  className={(getPossibleCombination(searchText).find((el) => el === item2[0]) !== undefined ? 'found main' : search_this.find(el => el === item2[0]) ? 'found' : '')} 
+                  className={(getPossibleCombination(searchText).find((el) => el === item2[0]) !== undefined ? 'found main' : '')} 
                   key={`item-v1-`+ind2}>{item2[0]} - {item2[1]}</li>
               ))}
             </ul>
