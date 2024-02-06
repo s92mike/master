@@ -391,18 +391,23 @@ export default function DisplayDigitAuto({ data }) {
   temp2.forEach((item) => {
     if (
       item[1] <= rangeBig && item[1] >= rangeSmall 
-      // && temp3.find((el) => el === item[0]) === undefined
     ) {
-      indexing = [...indexing, item[0]];
+      if (maxList <= 15 ) {
+        if (temp3.find((el) => el === item[0]) === undefined) {
+          indexing = [...indexing, item[0]];
+          // indexing = [...indexing, {num: item[0], count: item[1]}];
+        }
+      } else {
+        indexing = [...indexing, item[0]];
+      }
     }
   })
   // for computation
   const compute = false;
-  // numPrediction = [];
   const search_this = [];
-  let displayNumPrediction = [];
-  indexing.forEach((e) => {
-    search_this.push(...getPossibleCombination(e));
+  let possiblities = [];
+  search_this.forEach((e) => {
+    possiblities = [...possiblities, ...getPossibleCombination(e)];
   })
   return (
     <>
@@ -420,7 +425,7 @@ export default function DisplayDigitAuto({ data }) {
       <SingleSearchButton onSearch={changeSearch.bind(this)}/>
       <ul className="everything">
         {indexing.map((item, index) => (<li key={index + `masterMain`}>
-          {item}
+          '{item}',
         </li>))}
       </ul>
       <ul className="everything">
@@ -432,7 +437,7 @@ export default function DisplayDigitAuto({ data }) {
               (getPossibleCombination(searchText).find((el) => el === item[0]) !== undefined ? 'found main' : '') +
               (possMA.find(el => el === item[0]) ? ' poss' : '') +
               (numSearchDigit.some(c => item[0].includes(c)) ? ' found' : '') +
-              // (search_this.find(el => el === item[0]) ? ' search_this' : '') + 
+              (possiblities.find(el => el === item[0]) && item[1] <= 999 && item[1] >= 0 ? ' search_this' : '') + 
               (temp3.find((el) => el === item[0]) !== undefined ? ' exclude' : '')} 
           >
             <button 
@@ -443,7 +448,7 @@ export default function DisplayDigitAuto({ data }) {
               {item.map((item2, ind2) => {
                 const Bold    = () => (0 === ind2 ? <b>{item2}</b> : (1 === ind2) ? <>{item2}</> : <></>);
                 const dash    = (1 === ind2 ? `-` : ``);
-                return <>{dash}<Bold/></>;
+                return <span key={`span-${ind2}`}>{dash}<Bold/></span>;
               })}
               {/* {`(` + ([...item].splice(2).length) + `)`} */}
             </button>

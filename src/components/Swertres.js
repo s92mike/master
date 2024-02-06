@@ -26,6 +26,16 @@ export default function Swertres() {
     "",
     "",
     "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
   ]); // used by SearchButton, DisplayDigit
 
   function searchOnChange(inputText) {

@@ -5,34 +5,34 @@ export default function TabSelector({ setOptions, options }) {
   let bydayClassName = ``;
   let sidebysidev1ClassName = ``;
   let imageSurigaoClassName = ``;
-  let theoryTwo = ``;
+  // let theoryTwo = ``;
   if (`byday` === options) {
     bydayClassName = `current`;
     sidebysideClassName = ``;
     sidebysidev1ClassName = ``;
     imageSurigaoClassName = ``;
-    theoryTwo = ``;
+    // theoryTwo = ``;
   }
   if (`sidebysidev1` === options) {
     bydayClassName = ``;
     sidebysideClassName = ``;
     sidebysidev1ClassName = `current`;
     imageSurigaoClassName = ``;
-    theoryTwo = ``;
+    // theoryTwo = ``;
   }
   if (`image-surigao` === options) {
     bydayClassName = ``;
     sidebysideClassName = ``;
     sidebysidev1ClassName = ``;
     imageSurigaoClassName = `current`;
-    theoryTwo = ``;
+    // theoryTwo = ``;
   }
   if (`theory-two` === options) {
     bydayClassName = ``;
     sidebysideClassName = ``;
     sidebysidev1ClassName = ``;
     imageSurigaoClassName = ``;
-    theoryTwo = ``;
+    // theoryTwo = ``;
   }
   const toggleCurrent = (currentOptions) => {
     let changeOption = ``;
@@ -84,12 +84,12 @@ export default function TabSelector({ setOptions, options }) {
       >
         Theory One
       </button>
-      <button
+      {/* <button
         className={theoryTwo}
         onClick={toggleCurrent.bind(this, `theory-two`)}
       >
         Theory Two
-      </button>
+      </button> */}
     </div>
   );
 }

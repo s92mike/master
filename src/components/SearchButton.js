@@ -77,6 +77,36 @@ export default function SearchButton(props) {
         <label htmlFor="result">
             <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 9)} onKeyDown={checkDigitResult.bind(this)} value={results[9]}/>
         </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 10)} onKeyDown={checkDigitResult.bind(this)} value={results[10]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 11)} onKeyDown={checkDigitResult.bind(this)} value={results[11]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 12)} onKeyDown={checkDigitResult.bind(this)} value={results[12]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 13)} onKeyDown={checkDigitResult.bind(this)} value={results[13]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 14)} onKeyDown={checkDigitResult.bind(this)} value={results[14]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 15)} onKeyDown={checkDigitResult.bind(this)} value={results[15]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 16)} onKeyDown={checkDigitResult.bind(this)} value={results[16]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 17)} onKeyDown={checkDigitResult.bind(this)} value={results[17]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 18)} onKeyDown={checkDigitResult.bind(this)} value={results[18]}/>
+        </label>
+        <label htmlFor="result">
+            <input type="number" name="result" min="0" max="999" onChange={checkDigitChange.bind(this, 19)} onKeyDown={checkDigitResult.bind(this)} value={results[19]}/>
+        </label>
         <hr className="break"/>
         <button type="button" onClick={submitDigits.bind(this)}>Search!</button>
     </div>);
