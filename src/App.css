@@ -30,11 +30,21 @@
   margin: 0;
   border: 0;
 }
+
+.App .days li.double,
+.App .Group li.double {
+  background-color: #fff700;
+}
+
+.App .everything .found button,
+.App .theory .first .found,
+.App .days li.found,
 .App .Group li.found,
 .App .master li.found {
   background-color: #00ff55;
 }
 
+.App .everything .exclude button,
 .App .master li.found2 {
   background-color: #022d10;
   color: #fff;
@@ -50,10 +60,16 @@
   border-right: 1px solid #282c34;
 }
 
+.App .custom-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .App .tv {
   overflow: scroll;
   width: 100%;
-  height: calc(100vh - 215px);
+  height: 100vh;
 }
 
 .App .tv .guide {
@@ -77,6 +93,9 @@
     justify-content: center;
 }
 
+.App .everything,
+.App .theory .first,
+.App .days,
 .App .Group {
   list-style: none;
   position: relative;
@@ -93,6 +112,98 @@
   padding: 5px;
 }
 
+.App .container-days {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.App .days,
+.App .days li {
+  width: 100px;
+  display: block;
+}
+
+.App .theory {
+  max-width: 80px;
+}
+
+.App .theory .first {
+  width: 80px;
+}
+
+.App .everything,
+.App .master.theory-1 {
+  width: 100%;
+  overflow-x: scroll;
+}
+.App .everything li {
+  text-align: left;
+  width: 60px;
+}
+.App .everything li button {
+  min-height: 60px;
+}
+.App .theory-container {
+  display: flex;
+  width: 100%;
+  overflow-x: scroll;
+}
+.App .everything li {
+  position: relative;
+}
+.App .everything li .react-tooltip {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  background-color: #61dafb;
+  border-radius: 6px;
+  border: 1px solid #17596a;
+  width: 300px;
+  text-align: center;
+}
+.App .everything .found button {
+  border-color: #00ff55;
+  border-radius: 6px;
+}
+.App .everything .exclude button {
+  background-color: #0a2513;
+  border-radius: 6px;
+}
+.App .everything .exclude.found button {
+  background-color: #093c1a;
+  color: #ff0000;
+}
+.App .everything .found.main button {
+  background-color: #fff700;
+  color: #000;
+}
+.App .everything .found.main.exclude button {
+  background-color: #ff0000;
+  color: #fff;
+}
+.App .everything .poss,
+.App .everything .poss button {
+  background-color: #fff700;
+  color: #000;
+}
+.App .everything .compute button {
+  background-color: #ffa500;
+}
+.App .everything .search_this button {
+  background-color: #4d3200;
+  color: #fff;
+}
+.App .everything .search_this.compute button {
+  background-color: #57006b;
+  color: #fff;
+}
+.App .everything .exclude button {
+  background-color: #0a2513;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -113,6 +224,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding-top: 20px;
   padding-bottom: 20px;
   justify-content: center;
 }
@@ -123,8 +235,16 @@
   padding-bottom: 10px;
 }
 
+.App-header .inputers hr.break {
+  border-bottom: 2px solid #fff;
+  height: 1px;
+  margin-bottom: 10px;
+}
+
 .App-header .inputers label {
   font-size: 14px;
+  padding-bottom: 10px;
+  width: 120px;
 }
 
 .App-header .inputers input {
@@ -154,10 +274,28 @@
 
 @media screen and (max-width: 425px) {
     .App-header {
-        height: 135px;
+      height: auto;
+    }
+    .App-header .inputers {
+      padding: 10px 0;
+    }
+    .App-header .inputers label[for="search"] {
+      width: 160px;
+    }
+    .App-header .inputers button {
+      height: 50px;
+    }
+    .App-header .inputers button.current {
+      background-color: #383b41;
+      color: #fff;
     }
     .App .master {
         width: 8880px;
+    }
+    .App .master.theory-1 {
+      width: 250px;
+      margin: 0 auto;
+      justify-content: center;
     }
     .App .master li {
         width: 50px;
@@ -167,7 +305,7 @@
     }
     .App .display-group {
         overflow: scroll;
-        height: calc( 100vh - 195px);
+        height: 100vh;
     }
     .App .display-group.result {
         overflow: hidden;
@@ -180,5 +318,8 @@
     .App .tv {
         display: none;
         height: calc( 46vh );
+    }
+    .App .days li {
+      font-size: 30px;
     }
 }
